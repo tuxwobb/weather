@@ -21,7 +21,7 @@ python main.py
 
 ## Setup
 
-You need to generate and setup OpenWeatherMap API_KEY in .env file in backend folder in format:
+You need to generate and setup OpenWeatherMap API_KEY in .env file in frondend folder in format:
 
 ```
 VITE_OPEN_WEATHER_API_KEY = "<your api key>"
