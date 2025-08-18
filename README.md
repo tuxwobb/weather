@@ -21,5 +21,12 @@ python main.py
 
 ## Setup
 
-You need to generate and setup OpenWeatherMap API_KEY in backend/src/helpers.jsx file to be able fetch data from OpenWeatherMap portal.
+You need to generate and setup OpenWeatherMap API_KEY in .env file in backend folder in format:
+
+```
+VITE_OPEN_WEATHER_API_KEY = "<your api key>"
+```
+
+to be able fetch data from OpenWeatherMap portal.
+
 https://openweathermap.org/

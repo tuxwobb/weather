@@ -1,4 +1,4 @@
-export const OPEN_WEATHER_API_KEY = "<API_KEY>";
+export const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 export const OPEN_WEATHER_API_URL =
   "https://api.openweathermap.org/data/2.5/weather?";
 export const CUSTOM_API_URL = "http://127.0.0.1:5000";

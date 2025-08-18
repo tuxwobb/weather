@@ -91,7 +91,7 @@ export default function WeatherForm({ setCities }) {
             </div>
           )}
           {isLoading && (
-            <div className="alert alert-info">
+            <div className="alert alert-light">
               <p>{"Fetching cities"}</p>
             </div>
           )}

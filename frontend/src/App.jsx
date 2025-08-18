@@ -51,9 +51,7 @@ export default function App() {
         <div className="container">
           <div className="row">
             <div className="col">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+              <div className="alert alert-info">Loading...</div>
             </div>
           </div>
         </div>
