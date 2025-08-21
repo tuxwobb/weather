@@ -45,6 +45,14 @@ export default function Weather() {
 
   return (
     <>
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <h1>Weather</h1>
+          </div>
+        </div>
+      </div>
+
       <WeatherForm setCities={setCities} />
 
       {isLoading && (

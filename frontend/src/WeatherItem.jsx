@@ -26,7 +26,12 @@ export default function WeatherItem({ city, handleDelete, setIsError }) {
 
   return (
     <>
-      {isLoading && <p>Loading weather data...</p>}
+      {isLoading && (
+        <div className="col text-center m-2">
+          <p>Loading weather data...</p>
+        </div>
+      )}
+
       {!isLoading && apiData && (
         <div className="col text-center m-2">
           <h5>{apiData["name"]}</h5>

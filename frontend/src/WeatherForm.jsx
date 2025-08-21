@@ -67,9 +67,8 @@ export default function WeatherForm({ setCities }) {
 
   return (
     <div className="container">
-      <div className="row mt-3">
+      <div className="row">
         <div className="col col-sm-8 col-md-6">
-          <h1>Weather</h1>
           <p>
             <input
               className="form-control form-control-sm mb-1"

@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route("/", methods=["GET"])
 def index():
-    return jsonify({"response": "Hello World"})
+    return jsonify({"response": "Weather API"})
 
 
 @app.route("/cities", methods=["GET", "POST", "DELETE"])
