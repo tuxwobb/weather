@@ -5,7 +5,12 @@ import {
   OPEN_WEATHER_API_URL,
 } from "./http";
 
-export default function WeatherItem({ city, handleDelete, setIsError }) {
+export default function WeatherItem({
+  city,
+  handleDelete,
+  setIsError,
+  setDetailWeather,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
 
@@ -32,13 +37,13 @@ export default function WeatherItem({ city, handleDelete, setIsError }) {
   return (
     <>
       {isLoading && (
-        <div className="col text-center m-2">
+        <div className="col text-center">
           <p>Loading weather data...</p>
         </div>
       )}
 
       {!isLoading && apiData && (
-        <div className="col text-center m-2">
+        <div className="col text-center border">
           <h5>{apiData["name"]}</h5>
           <img
             src={`https://openweathermap.org/img/wn/${apiData["weather"][0]["icon"]}@2x.png`}
@@ -81,7 +86,19 @@ export default function WeatherItem({ city, handleDelete, setIsError }) {
             {apiData["wind"]["speed"]} m/s
             <br />
             <button
-              className="btn btn-sm btn-danger mt-2"
+              className="btn btn-sm btn-light mt-2"
+              onClick={() =>
+                setDetailWeather({
+                  name: apiData["name"],
+                  lat: apiData["coord"]["lat"],
+                  lon: apiData["coord"]["lon"],
+                })
+              }
+            >
+              Detail
+            </button>{" "}
+            <button
+              className="btn btn-sm btn-dark mt-2"
               onClick={() => handleDelete(city)}
             >
               Delete

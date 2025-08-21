@@ -65,7 +65,7 @@ export default function WeatherForm({ setCities }) {
               ref={cityRef}
             />
             <button
-              className="btn btn-sm btn-primary mb-1"
+              className="btn btn-sm btn-dark mb-1"
               onClick={handleAddCity}
             >
               Add

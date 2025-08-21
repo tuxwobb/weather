@@ -1,6 +1,8 @@
 export const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 export const OPEN_WEATHER_API_URL =
   "https://api.openweathermap.org/data/2.5/weather?";
+export const OPEN_WEATHER_API_DETAIL_URL =
+  "https://api.openweathermap.org/data/2.5/forecast?";
 export const CUSTOM_API_URL = "http://127.0.0.1:5000";
 
 export async function fetchWeather(apiUrl, apiKey, city) {
@@ -8,6 +10,26 @@ export async function fetchWeather(apiUrl, apiKey, city) {
     apiUrl +
       new URLSearchParams({
         q: city,
+        appid: apiKey,
+        units: "metric",
+        lang: "cz",
+      }).toString()
+  );
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+
+  return resData;
+}
+
+export async function fetchDetailWeather(apiDetailUrl, apiKey, lat, lon) {
+  const response = await fetch(
+    apiDetailUrl +
+      new URLSearchParams({
+        lat: lat,
+        lon: lon,
         appid: apiKey,
         units: "metric",
         lang: "cz",
