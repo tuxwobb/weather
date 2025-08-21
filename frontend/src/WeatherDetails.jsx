@@ -51,7 +51,7 @@ export default function WeatherDetails({ apiData, setDetailWeather }) {
 
       {!isLoading && !isError && weatherData && (
         <>
-          <div className="container border">
+          <div className="container border rounded-4">
             <div className="row">
               <div className="col text-center m-2">
                 <h5>{apiData.name}</h5>
@@ -69,7 +69,10 @@ export default function WeatherDetails({ apiData, setDetailWeather }) {
             </div>
             <div className="row">
               {weatherData.list.slice(0, 16).map((day) => (
-                <div className="col col-md-2 text-center" key={day.dt}>
+                <div
+                  className="col-sm-6 col-md-3 col-lg-2 text-center"
+                  key={day.dt}
+                >
                   {/* <p>{day.dt_txt}</p> */}
                   <img
                     src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}

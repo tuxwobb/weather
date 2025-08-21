@@ -43,7 +43,7 @@ export default function WeatherItem({
       )}
 
       {!isLoading && apiData && (
-        <div className="col text-center border">
+        <div className="col-sm-6 col-md-3 col-lg-2 text-center text-center border rounded-4">
           <h5>{apiData["name"]}</h5>
           <img
             src={`https://openweathermap.org/img/wn/${apiData["weather"][0]["icon"]}@2x.png`}
@@ -98,7 +98,7 @@ export default function WeatherItem({
               Detail
             </button>{" "}
             <button
-              className="btn btn-sm btn-dark mt-2"
+              className="btn btn-sm btn-secondary mt-2"
               onClick={() => handleDelete(city)}
             >
               Delete

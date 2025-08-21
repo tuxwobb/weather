@@ -65,21 +65,21 @@ export default function WeatherForm({ setCities }) {
               ref={cityRef}
             />
             <button
-              className="btn btn-sm btn-dark mb-1"
+              className="btn btn-sm btn-secondary mb-1"
               onClick={handleAddCity}
             >
               Add
             </button>
           </p>
           {isError && (
-            <div className="alert alert-danger">
-              <p>{isError.message}</p>
-            </div>
+            <p className="alert alert-danger" role="alert">
+              {isError.message}
+            </p>
           )}
           {isLoading && (
-            <div className="alert alert-light">
-              <p>{"Fetching cities"}</p>
-            </div>
+            <p className="alert alert-light" role="alert">
+              {"Fetching cities"}
+            </p>
           )}
         </div>
       </div>
