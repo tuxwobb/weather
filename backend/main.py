@@ -2,9 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 CITIES = [
-    {"name": "New York City"},
-    {"name": "Los Angeles"},
-    {"name": "Chicago"},
+    {"name": "Břeclav"},
+    {"name": "Hodonín"},
+    {"name": "Brno"},
+    {"name": "Praha"},
 ]
 
 app = Flask(__name__)
