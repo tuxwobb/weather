@@ -14,7 +14,7 @@ CORS(app)
 
 @app.route("/", methods=["GET"])
 def index():
-    return jsonify({"response": "Weather API"})
+    return jsonify({"message": "Weather API"})
 
 
 @app.route("/cities", methods=["GET", "POST", "DELETE"])
@@ -27,17 +27,17 @@ def cities():
         data = request.get_json()
         data["name"] = str(data["name"]).lower()
         if data in CITIES:
-            return "city already exists", 400
+            return jsonify({"message": "city already exists"}), 400
         CITIES.append(data)
-        return jsonify({"response": "city was added"})
+        return jsonify({"message": "city was added"}), 201
 
     if request.method == "DELETE":
         data = request.get_json()
         data["name"] = str(data["name"]).lower()
         if data not in CITIES:
-            return "city does not exist", 400
+            return ({"message": "city does not exist"}), 400
         CITIES.remove(data)
-        return jsonify({"response": "city was deleted"})
+        return jsonify({"message": "city was deleted"}), 201
 
 
 if __name__ == "__main__":

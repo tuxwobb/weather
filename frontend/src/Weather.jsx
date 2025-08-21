@@ -33,8 +33,8 @@ export default function Weather() {
       await deleteCity(city);
       setCities((prevCities) => prevCities.filter((c) => c["name"] !== city));
       setIsLoading(false);
-    } catch {
-      setIsError({ message: "Error while deleting city" });
+    } catch (error) {
+      setIsError(error);
       setIsLoading(false);
       return;
     }

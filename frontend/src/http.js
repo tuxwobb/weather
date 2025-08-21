@@ -27,7 +27,7 @@ export async function getCities() {
   const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error(resData.message);
+    throw new Error(resData.message || "error occured");
   }
 
   return resData;
@@ -44,7 +44,7 @@ export async function addCity(city) {
   const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error(resData.message);
+    throw new Error(resData.message || "error occured");
   }
 
   return resData;
@@ -61,7 +61,7 @@ export async function deleteCity(city) {
   const resData = await response.json();
 
   if (!response.ok) {
-    throw new Error(resData.message);
+    throw new Error(resData.message || "error occured");
   }
 
   return resData;

@@ -29,8 +29,8 @@ export default function WeatherForm({ setCities }) {
         cityRef.current.value
       );
       setIsLoading(false);
-    } catch {
-      setIsError({ message: "City not found" });
+    } catch (error) {
+      setIsError(error);
       setIsLoading(false);
       return;
     }
@@ -45,8 +45,8 @@ export default function WeatherForm({ setCities }) {
         { name: cityRef.current.value },
       ]);
       setIsLoading(false);
-    } catch {
-      setIsError({ message: "Error while adding city" });
+    } catch (error) {
+      setIsError(error);
       setIsLoading(false);
       return;
     }

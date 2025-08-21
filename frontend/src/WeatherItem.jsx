@@ -21,8 +21,8 @@ export default function WeatherItem({ city, handleDelete, setIsError }) {
         );
         setApiData(data);
         setIsLoading(false);
-      } catch {
-        setIsError({ message: "Error while fetching weather data" });
+      } catch (error) {
+        setIsError(error);
         setIsLoading(false);
       }
     }
