@@ -4,7 +4,7 @@ export const OPEN_WEATHER_API_URL =
 export const CUSTOM_API_URL = "http://127.0.0.1:5000";
 
 export async function fetchWeather(apiUrl, apiKey, city) {
-  const result = await fetch(
+  const response = await fetch(
     apiUrl +
       new URLSearchParams({
         q: city,
@@ -13,14 +13,24 @@ export async function fetchWeather(apiUrl, apiKey, city) {
         lang: "cz",
       }).toString()
   );
-  const data = await result.json();
-  return data;
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+
+  return resData;
 }
 
 export async function getCities() {
   const response = await fetch(`${CUSTOM_API_URL}/cities`);
-  const data = await response.json();
-  return data;
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+
+  return resData;
 }
 
 export async function addCity(city) {
@@ -29,10 +39,15 @@ export async function addCity(city) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ city: city }),
+    body: JSON.stringify({ name: city }),
   });
-  const data = await response.json();
-  return data;
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+
+  return resData;
 }
 
 export async function deleteCity(city) {
@@ -41,8 +56,13 @@ export async function deleteCity(city) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ city: city }),
+    body: JSON.stringify({ name: city }),
   });
-  const data = await response.json();
-  return data;
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message);
+  }
+
+  return resData;
 }

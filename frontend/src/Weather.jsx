@@ -1,7 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import WeatherForm from "./WeatherForm";
 import WeatherItems from "./WeatherItems";
-import { CUSTOM_API_URL, getCities } from "./helpers";
+import { getCities, deleteCity } from "./http";
 
 export default function Weather() {
   const [cities, setCities] = useState([]);
@@ -10,38 +10,35 @@ export default function Weather() {
 
   // initial fetch of cities from custom API
   useEffect(() => {
-    try {
+    async function fetchCities() {
+      setIsError(null);
       setIsLoading(true);
-      getCities().then((data) => {
+      try {
+        const data = await getCities();
         setCities(data["cities"]);
-      });
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      setIsError(error);
+      } catch {
+        setIsLoading(false);
+        setIsError({ message: "Error while fetching cities" });
+      }
     }
+    fetchCities();
+    setIsLoading(false);
   }, []);
 
   // delete city in cusom API
-  const handleDeleteCity = useCallback(async function handleDeleteCity(city) {
+  async function handleDeleteCity(city) {
+    setIsError(null);
+    setIsLoading(true);
     try {
-      const response = await fetch(`${CUSTOM_API_URL}/cities`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: city }),
-      });
-      if (!response.ok) {
-        setIsError({ message: "Error deleting city" });
-        return;
-      }
-    } catch (error) {
-      setIsError(error);
+      await deleteCity(city);
+      setCities((prevCities) => prevCities.filter((c) => c["name"] !== city));
+      setIsLoading(false);
+    } catch {
+      setIsError({ message: "Error while deleting city" });
+      setIsLoading(false);
       return;
     }
-    setCities((prevCities) => prevCities.filter((c) => c["name"] !== city));
-  }, []);
+  }
 
   return (
     <>

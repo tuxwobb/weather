@@ -1,69 +1,56 @@
-import { useState, useRef, useCallback } from "react";
-import { OPEN_WEATHER_API_KEY, OPEN_WEATHER_API_URL } from "./helpers";
+import { useState, useRef } from "react";
+import {
+  fetchWeather,
+  addCity,
+  OPEN_WEATHER_API_KEY,
+  OPEN_WEATHER_API_URL,
+} from "./http";
 
 export default function WeatherForm({ setCities }) {
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
   const cityRef = useRef(null);
 
-  // add city
-  const handleAddCity = useCallback(
-    async function handleAddCity() {
-      if (!cityRef.current.value) {
-        setIsError({ message: "Please enter a city name" });
-        return;
-      }
+  //add city
+  async function handleAddCity() {
+    // check if city is not empty
+    if (!cityRef.current.value) {
+      setIsError({ message: "Please enter a city name" });
+      return;
+    }
+
+    // check if city exists in OpenWeather API
+    try {
       setIsError(null);
       setIsLoading(true);
-      try {
-        const result = await fetch(
-          OPEN_WEATHER_API_URL +
-            new URLSearchParams({
-              q: cityRef.current.value,
-              appid: OPEN_WEATHER_API_KEY,
-              units: "metric",
-              lang: "cz",
-            }).toString()
-        );
-        if (!result.ok) {
-          setIsError({ message: "City not found in OpenWeatherAPI." });
-          setIsLoading(false);
-          return;
-        }
-      } catch (error) {
-        setIsError(error);
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        const response = await fetch("http://127.0.0.1:5000/cities", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name: cityRef.current.value }),
-        });
-
-        if (!response.ok) {
-          setIsError({ message: "City already exists" });
-          setIsLoading(false);
-          return;
-        }
-      } catch (error) {
-        setIsError({ message: error.message });
-        setIsLoading(false);
-        return;
-      }
+      await fetchWeather(
+        OPEN_WEATHER_API_URL,
+        OPEN_WEATHER_API_KEY,
+        cityRef.current.value
+      );
       setIsLoading(false);
+    } catch {
+      setIsError({ message: "City not found" });
+      setIsLoading(false);
+      return;
+    }
+
+    // add city into cities
+    try {
+      setIsError(null);
+      setIsLoading(true);
+      await addCity(cityRef.current.value);
       setCities((prevCities) => [
         ...prevCities,
         { name: cityRef.current.value },
       ]);
-    },
-    [setCities]
-  );
+      setIsLoading(false);
+    } catch {
+      setIsError({ message: "Error while adding city" });
+      setIsLoading(false);
+      return;
+    }
+  }
 
   return (
     <div className="container">

@@ -2,10 +2,10 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 CITIES = [
-    {"name": "Břeclav"},
-    {"name": "Hodonín"},
-    {"name": "Brno"},
-    {"name": "Praha"},
+    {"name": "břeclav"},
+    {"name": "hodonín"},
+    {"name": "brno"},
+    {"name": "praha"},
 ]
 
 app = Flask(__name__)
@@ -25,6 +25,7 @@ def cities():
 
     if request.method == "POST":
         data = request.get_json()
+        data["name"] = str(data["name"]).lower()
         if data in CITIES:
             return "city already exists", 400
         CITIES.append(data)
@@ -32,6 +33,7 @@ def cities():
 
     if request.method == "DELETE":
         data = request.get_json()
+        data["name"] = str(data["name"]).lower()
         if data not in CITIES:
             return "city does not exist", 400
         CITIES.remove(data)

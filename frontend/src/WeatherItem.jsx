@@ -3,25 +3,30 @@ import {
   fetchWeather,
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
-} from "./helpers";
+} from "./http";
 
 export default function WeatherItem({ city, handleDelete, setIsError }) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
-    try {
+    async function fetchWeatherData() {
+      setIsError(null);
       setIsLoading(true);
-      fetchWeather(OPEN_WEATHER_API_URL, OPEN_WEATHER_API_KEY, city).then(
-        (data) => {
-          setApiData(data);
-          setIsLoading(false);
-        }
-      );
-    } catch (error) {
-      setIsError({ error });
-      setIsLoading(false);
+      try {
+        const data = await fetchWeather(
+          OPEN_WEATHER_API_URL,
+          OPEN_WEATHER_API_KEY,
+          city
+        );
+        setApiData(data);
+        setIsLoading(false);
+      } catch {
+        setIsError({ message: "Error while fetching weather data" });
+        setIsLoading(false);
+      }
     }
+    fetchWeatherData();
   }, [city, setIsError]);
 
   return (
