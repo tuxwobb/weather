@@ -45,7 +45,7 @@ export default function Weather() {
       <div className="container">
         <div className="row">
           <div className="col">
-            <h1>Weather</h1>
+            <h3>Weather</h3>
           </div>
         </div>
       </div>
