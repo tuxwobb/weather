@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import WeatherForm from "./WeatherForm";
 import WeatherItems from "./WeatherItems";
-import { getCities, deleteCity } from "./http";
+import { getCities, deleteCity } from "../http.js";
 
 export default function Weather() {
   const [cities, setCities] = useState([]);
@@ -15,7 +15,7 @@ export default function Weather() {
       setIsLoading(true);
       try {
         const data = await getCities();
-        setCities(data["cities"]);
+        setCities(data);
       } catch {
         setIsLoading(false);
         setIsError({ message: "Error while fetching cities" });
@@ -26,12 +26,12 @@ export default function Weather() {
   }, []);
 
   // delete city in cusom API
-  async function handleDeleteCity(city) {
+  async function handleDeleteCity(city_id) {
     setIsError(null);
     setIsLoading(true);
     try {
-      await deleteCity(city);
-      setCities((prevCities) => prevCities.filter((c) => c["name"] !== city));
+      await deleteCity(city_id);
+      setCities((prevCities) => prevCities.filter((c) => c["id"] !== city_id));
       setIsLoading(false);
     } catch (error) {
       setIsError(error);
@@ -42,7 +42,7 @@ export default function Weather() {
 
   return (
     <>
-      <div className="container">
+      <div className="container mt-3">
         <div className="row">
           <div className="col">
             <h3>Weather</h3>

@@ -22,39 +22,38 @@ export default function MainNavigation() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <NavLink to="/" className="nav-link" aria-current="page" end>
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/weather"
-                className="nav-link"
-                aria-current="page"
-                end
-              >
-                Weather
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/blog" className="nav-link" aria-current="page" end>
-                Blog
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link"
-                aria-disabled="true"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://bobkovo.cz/"
-              >
-                BC API
-              </a>
-            </li>
-          </ul>
+          <div className="navbar-nav">
+            <NavLink to="/" className="nav-link" aria-current="page" end>
+              Home
+            </NavLink>
+            <NavLink to="/weather" className="nav-link" aria-current="page" end>
+              Weather
+            </NavLink>
+            <NavLink to="/blog" className="nav-link" aria-current="page" end>
+              Blog
+            </NavLink>
+            <NavLink to="/files" className="nav-link" aria-current="page" end>
+              Files
+            </NavLink>
+            <NavLink
+              to="/gallery"
+              className="nav-link disabled"
+              aria-disabled="true"
+              aria-current="page"
+              end
+            >
+              Gallery
+            </NavLink>
+            <a
+              className="nav-link"
+              aria-disabled="true"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://bobkovo.cz/"
+            >
+              BC API
+            </a>
+          </div>
         </div>
       </div>
     </nav>

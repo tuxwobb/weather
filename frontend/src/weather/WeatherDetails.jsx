@@ -3,7 +3,7 @@ import {
   fetchDetailWeather,
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_DETAIL_URL,
-} from "./http";
+} from "../http";
 
 export default function WeatherDetails({ apiData, setDetailWeather }) {
   const [isLoading, setIsLoading] = useState(false);

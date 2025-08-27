@@ -10,8 +10,8 @@ export default function WeatherItems({ cities, handleDelete, setIsError }) {
         <div className="row">
           {cities.map((city) => (
             <WeatherItem
-              key={city["name"]}
-              city={city["name"]}
+              key={city.id}
+              city={city}
               handleDelete={handleDelete}
               setIsError={setIsError}
               setDetailWeather={setDetailWeather}

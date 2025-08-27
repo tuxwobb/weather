@@ -4,7 +4,7 @@ import {
   addCity,
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
-} from "./http";
+} from "../http";
 
 export default function WeatherForm({ setCities }) {
   const [isError, setIsError] = useState(null);
@@ -39,10 +39,10 @@ export default function WeatherForm({ setCities }) {
     try {
       setIsError(null);
       setIsLoading(true);
-      await addCity(cityRef.current.value);
+      const response = await addCity(cityRef.current.value);
       setCities((prevCities) => [
         ...prevCities,
-        { name: cityRef.current.value },
+        { name: cityRef.current.value, id: response.id },
       ]);
       setIsLoading(false);
     } catch (error) {

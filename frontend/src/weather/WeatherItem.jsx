@@ -3,7 +3,7 @@ import {
   fetchWeather,
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
-} from "./http";
+} from "../http";
 
 export default function WeatherItem({
   city,
@@ -22,7 +22,7 @@ export default function WeatherItem({
         const data = await fetchWeather(
           OPEN_WEATHER_API_URL,
           OPEN_WEATHER_API_KEY,
-          city
+          city.name
         );
         setApiData(data);
         setIsLoading(false);
@@ -99,7 +99,7 @@ export default function WeatherItem({
             </button>{" "}
             <button
               className="btn btn-sm btn-secondary mt-2"
-              onClick={() => handleDelete(city)}
+              onClick={() => handleDelete(city.id)}
             >
               Delete
             </button>

@@ -4,10 +4,10 @@ export default function Error() {
   return (
     <>
       <MainNavigation />
-      <div className="container">
+      <div className="container mt-3">
         <div className="row">
           <div className="col">
-            <h3>Error</h3>
+            <h3>Page doesn't exist.</h3>
           </div>
         </div>
       </div>
