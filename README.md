@@ -1,6 +1,6 @@
 # Simple React weather application connected to Python (Flask API) and OpenWeatherMap API
 
-This is very simple React weather application using OpenWeatherMap and Python Flask API. Thanks to Bootstrap for styling.
+This is very simple React weather application using OpenWeatherMap and Python FastAPI. Thanks to Bootstrap for styling.
 
 ## Installation
 
