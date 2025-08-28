@@ -1,5 +1,5 @@
 import { useLoaderData, redirect } from "react-router-dom";
-import PostForm from "./PostForm.jsx";
+import PostForm from "./components/PostForm.jsx";
 import { editPost } from "../http.js";
 
 function PostEdit() {

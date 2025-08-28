@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import PostForm from "./PostForm.jsx";
+import PostForm from "./components/PostForm";
 import { createPost } from "../http";
 
 export default function PostNew() {
