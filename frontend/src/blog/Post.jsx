@@ -5,7 +5,6 @@ export default function Post({ post }) {
     <div className="col-4">
       <hr />
       <h4>{post.title}</h4>
-      <p>{post.body}</p>
       <img
         src={post.imageUrl}
         alt="react-img"

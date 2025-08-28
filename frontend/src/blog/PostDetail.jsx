@@ -1,11 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { blogPosts } from "./data";
+import { Link, useLoaderData, redirect, useNavigate } from "react-router-dom";
+import { deletePost } from "../http";
 
 export default function PostDetail() {
-  const params = useParams();
+  const navigate = useNavigate();
+  const post = useLoaderData();
 
-  const post = blogPosts.find((post) => post.id.toString() === params.postId);
+  async function handleDeletePost(post_id) {
+    const resData = await deletePost(post_id);
+
+    navigate("/blog");
+  }
 
   return (
     <div className="container mt-3">
@@ -23,13 +27,26 @@ export default function PostDetail() {
             </Link>{" "}
             <Link
               className="btn btn-sm btn-primary"
-              to={`/blog/edit/${post.id}`}
+              to={`/blog/${post.id}/edit`}
             >
               Edit
-            </Link>
+            </Link>{" "}
+            <button
+              className="btn btn-sm btn-danger"
+              onClick={() => {
+                handleDeletePost(post.id);
+              }}
+            >
+              Delete
+            </button>
           </p>
         </div>
       </div>
     </div>
   );
+}
+
+export async function deletePostAction({ params }) {
+  await deletePost(params.productId);
+  return redirect("/blog");
 }

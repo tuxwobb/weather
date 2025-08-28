@@ -1,29 +1,11 @@
-import { useState, useEffect } from "react";
-import Posts from "./Posts";
+import { useState } from "react";
+import { useLoaderData, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
-import { getPosts } from "../http";
+import Posts from "./Posts";
 
 export default function Blog() {
   const [filterText, setFilterText] = useState("");
-  const [blogPosts, setBlogPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(null);
-
-  useEffect(() => {
-    async function fetchPosts() {
-      setIsError(null);
-      setIsLoading(true);
-      try {
-        const data = await getPosts();
-        setBlogPosts(data);
-      } catch {
-        setIsLoading(false);
-        setIsError({ message: "Error while fetching cities" });
-      }
-    }
-    fetchPosts();
-    setIsLoading(false);
-  }, []);
+  const blogPosts = useLoaderData();
 
   return (
     <div className="container mt-3">
@@ -33,31 +15,23 @@ export default function Blog() {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mb-2">
         <div className="col-3">
           <SearchBar filterText={filterText} setFilterText={setFilterText} />
         </div>
       </div>
 
-      {isLoading && (
-        <div className="row">
-          <div className="col">
-            <p>Loading...</p>
-          </div>
+      <div className="row">
+        <div className="col-3">
+          <Link className="btn btn-sm btn-secondary" to="/blog/new">
+            New post
+          </Link>
         </div>
-      )}
-      {isError && (
-        <div className="row">
-          <div className="col">
-            <p>{isError.message}</p>
-          </div>
-        </div>
-      )}
-      {!isLoading && !isError && blogPosts.length > 0 && (
-        <div className="row">
-          <Posts filterText={filterText} blogPosts={blogPosts} />
-        </div>
-      )}
+      </div>
+
+      <div className="row">
+        <Posts filterText={filterText} blogPosts={blogPosts} />
+      </div>
     </div>
   );
 }

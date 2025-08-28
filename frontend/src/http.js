@@ -89,6 +89,7 @@ export async function deleteCity(city_id) {
   return resData;
 }
 
+// in loader
 export async function getPosts() {
   const response = await fetch(`${CUSTOM_API_URL}/posts`);
   const resData = await response.json();
@@ -100,13 +101,25 @@ export async function getPosts() {
   return resData;
 }
 
-export async function addPost(post) {
+// in loader
+export async function getPost(post_id) {
+  const response = await fetch(`${CUSTOM_API_URL}/posts/${post_id}`);
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function createPost(post) {
   const response = await fetch(`${CUSTOM_API_URL}/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: post }),
+    body: JSON.stringify(post),
   });
   const resData = await response.json();
 
@@ -117,13 +130,29 @@ export async function addPost(post) {
   return resData;
 }
 
-export async function deletePost(post) {
-  const response = await fetch(`${CUSTOM_API_URL}/posts`, {
+export async function editPost(post) {
+  const response = await fetch(`${CUSTOM_API_URL}/posts/${post.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(post),
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function deletePost(post_id) {
+  const response = await fetch(`${CUSTOM_API_URL}/posts/${post_id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ name: post }),
   });
   const resData = await response.json();
 
