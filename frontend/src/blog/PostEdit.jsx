@@ -12,7 +12,6 @@ export default PostEdit;
 
 export async function editPostAction({ request }) {
   const formData = await request.formData();
-
   const editedPost = {
     id: formData.get("id"),
     title: formData.get("title"),
@@ -21,9 +20,6 @@ export async function editPostAction({ request }) {
     author: formData.get("author"),
     published: formData.get("published"),
   };
-
-  console.log(editedPost);
-
   const resData = await editPost(editedPost);
 
   return redirect("/blog");

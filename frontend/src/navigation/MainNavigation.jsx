@@ -32,7 +32,12 @@ export default function MainNavigation() {
             <NavLink to="/blog" className="nav-link" aria-current="page" end>
               Blog
             </NavLink>
-            <NavLink to="/files" className="nav-link" aria-current="page" end>
+            <NavLink
+              to="/files"
+              className="nav-link disabled"
+              aria-current="page"
+              end
+            >
               Files
             </NavLink>
             <NavLink
