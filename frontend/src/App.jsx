@@ -67,7 +67,7 @@ const router = createBrowserRouter([
               <div className="container">
                 <div className="row mt-3">
                   <div className="col">
-                    <p>Error during fetching data</p>
+                    <p>Error during pushing data</p>
                   </div>
                 </div>
               </div>
@@ -77,6 +77,15 @@ const router = createBrowserRouter([
             path: "/blog/new",
             element: <PostNew />,
             action: newPostAction,
+            errorElement: (
+              <div className="container">
+                <div className="row mt-3">
+                  <div className="col">
+                    <p>Error during pushing data</p>
+                  </div>
+                </div>
+              </div>
+            ),
           },
         ],
       },

@@ -27,16 +27,20 @@ export default function Weather() {
 
   // delete city in cusom API
   async function handleDeleteCity(city_id) {
-    setIsError(null);
-    setIsLoading(true);
-    try {
-      await deleteCity(city_id);
-      setCities((prevCities) => prevCities.filter((c) => c["id"] !== city_id));
-      setIsLoading(false);
-    } catch (error) {
-      setIsError(error);
-      setIsLoading(false);
-      return;
+    if (confirm("Are you sure to delete city?")) {
+      setIsError(null);
+      setIsLoading(true);
+      try {
+        await deleteCity(city_id);
+        setCities((prevCities) =>
+          prevCities.filter((c) => c["id"] !== city_id)
+        );
+        setIsLoading(false);
+      } catch (error) {
+        setIsError(error);
+        setIsLoading(false);
+        return;
+      }
     }
   }
 

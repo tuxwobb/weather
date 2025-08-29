@@ -1,6 +1,29 @@
 import { Form } from "react-router-dom";
+import { useRef } from "react";
+
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import {
+  ClassicEditor,
+  Bold,
+  Underline,
+  Essentials,
+  Heading,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link as CKLink,
+  List,
+  MediaEmbed,
+  Paragraph,
+  Table,
+  Undo,
+} from "ckeditor5";
+
+import "ckeditor5/ckeditor5.css";
 
 export default function PostForm({ post }) {
+  const bodyRef = useRef(null);
+
   return (
     <div className="container mt-3">
       <div className="row">
@@ -24,12 +47,59 @@ export default function PostForm({ post }) {
                 Body
               </label>
               <textarea
-                rows="3"
+                ref={bodyRef}
+                rows="15"
                 className="form-control form-control-sm"
                 id="body"
                 name="body"
                 defaultValue={post && post.body}
+                hidden
               ></textarea>
+              <CKEditor
+                data={post && post.body}
+                onChange={(event, editor) =>
+                  (bodyRef.current.value = editor.getData())
+                }
+                editor={ClassicEditor}
+                config={{
+                  licenseKey: "GPL",
+                  toolbar: [
+                    "undo",
+                    "redo",
+                    "|",
+                    "heading",
+                    "|",
+                    "bold",
+                    "italic",
+                    "underline",
+                    "|",
+                    "link",
+                    "insertTable",
+                    "mediaEmbed",
+                    "|",
+                    "bulletedList",
+                    "numberedList",
+                    "indent",
+                    "outdent",
+                  ],
+                  plugins: [
+                    Bold,
+                    Essentials,
+                    Heading,
+                    Indent,
+                    IndentBlock,
+                    Italic,
+                    Underline,
+                    List,
+                    CKLink,
+                    MediaEmbed,
+                    Paragraph,
+                    Table,
+                    Undo,
+                  ],
+                  initialData: "",
+                }}
+              />
             </div>
             <div className="mb-1">
               <label htmlFor="imageUrl" className="form-label form-label-sm">

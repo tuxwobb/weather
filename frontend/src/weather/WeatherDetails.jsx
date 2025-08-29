@@ -80,7 +80,7 @@ export default function WeatherDetails({ apiData, setDetailWeather }) {
                   />
                   <p className="lead">
                     {day.dt_txt.split(" ")[0]} <br />
-                    {day.dt_txt.split(" ")[1]}
+                    {day.dt_txt.split(" ")[1].substring(0, 5)}
                     <br />
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
