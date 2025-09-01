@@ -33,12 +33,12 @@ class UserBase(BaseModel):
     fullname: str
     username: str
     email: str
-    active: bool
-    admin: bool
 
 
 class User(UserBase):
     id: int
+    active: bool
+    admin: bool
 
 
 class UserCreate(UserBase):

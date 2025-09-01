@@ -5,8 +5,15 @@ from . import models, schemas
 
 
 # Cities
-def get_cities(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(models.City).offset(skip).limit(limit).all()
+def get_cities(db: Session, commons):
+    search = "%{}%".format(commons["name"] if commons["name"] else "")
+    return (
+        db.query(models.City)
+        .filter(models.City.name.like(search))
+        .offset(commons["skip"])
+        .limit(commons["limit"])
+        .all()
+    )
 
 
 def get_city(db: Session, city_id: int):
@@ -103,8 +110,8 @@ def create_user(db: Session, user: schemas.UserCreate):
         fullname=user.fullname,
         username=user.username,
         email=user.email,
-        active=user.active,
-        admin=user.admin,
+        active=False,
+        admin=False,
         password=user.password,
     )
     db.add(db_user)
@@ -131,3 +138,23 @@ def delete_user(db: Session, user_id: int):
     db.query(models.User).filter(models.User.id == user_id).delete()
     db.commit()
     return {"message": "User deleted"}
+
+
+def make_active_user(db: Session, user_id: int):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_user.active = True
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
+def make_admin_user(db: Session, user_id: int):
+    db_user = db.query(models.User).filter(models.User.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_user.admin = True
+    db.commit()
+    db.refresh(db_user)
+    return db_user
