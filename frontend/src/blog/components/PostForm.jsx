@@ -1,5 +1,6 @@
 import { Form } from "react-router-dom";
 import { useRef } from "react";
+import { toIsoString } from "../../helpers";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
@@ -23,6 +24,7 @@ import "ckeditor5/ckeditor5.css";
 
 export default function PostForm({ post }) {
   const bodyRef = useRef(null);
+  const dt = new Date();
 
   return (
     <div className="container mt-3">
@@ -130,11 +132,23 @@ export default function PostForm({ post }) {
                 Published
               </label>
               <input
-                type="text"
+                type="datetime-local"
                 className="form-control form-control-sm"
                 id="published"
                 name="published"
-                defaultValue={post && post.published}
+                defaultValue={
+                  post ? post.published : toIsoString(dt).slice(0, 16)
+                }
+              />
+              <label htmlFor="created" className="form-label form-label-sm">
+                Created
+              </label>
+              <input
+                type="datetime-local"
+                className="form-control form-control-sm"
+                id="created"
+                name="created"
+                defaultValue={toIsoString(dt).slice(0, 16)}
               />
               <input
                 type="text"

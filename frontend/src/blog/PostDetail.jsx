@@ -17,11 +17,13 @@ export default function PostDetail() {
     <div className="container mt-3">
       <div className="row">
         <div className="col">
-          <h3>{post.title}</h3>
           <p>
             <img src={post.imageUrl} alt="react-img" className="img-fluid" />
           </p>
+          <h3>{post.title}</h3>
+          <hr />
           {parse(post.body)}
+          <hr />
           <p>
             {post.author} | {post.published}
           </p>

@@ -14,6 +14,8 @@ import PostNew from "./blog/PostNew.jsx";
 import { newPostAction } from "./blog/PostNew.jsx";
 import Files from "./files/Files.jsx";
 import Gallery from "./gallery/Gallery.jsx";
+import Users from "./users/Users.jsx";
+import { getUsers as usersLoader } from "./http.js";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +99,20 @@ const router = createBrowserRouter([
       {
         path: "/gallery",
         element: <Gallery />,
+      },
+      {
+        path: "/users",
+        element: <Users />,
+        loader: usersLoader,
+        errorElement: (
+          <div className="container">
+            <div className="row mt-3">
+              <div className="col">
+                <p>Error during fetching data</p>
+              </div>
+            </div>
+          </div>
+        ),
       },
     ],
   },

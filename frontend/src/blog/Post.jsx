@@ -16,7 +16,7 @@ export default function Post({ post }) {
         </Link>
         <span className="float-end">
           <em>
-            {post.author} | {post.published}
+            {post.author} | {post.published.slice(0, 10)}
           </em>
         </span>
       </p>

@@ -58,6 +58,9 @@ export default function MainNavigation() {
             >
               BC API
             </a>
+            <NavLink to="/users" className="nav-link" aria-current="page" end>
+              Users
+            </NavLink>
           </div>
         </div>
       </div>

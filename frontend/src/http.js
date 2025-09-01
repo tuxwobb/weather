@@ -162,3 +162,14 @@ export async function deletePost(post_id) {
 
   return resData;
 }
+
+export async function getUsers() {
+  const response = await fetch(`${CUSTOM_API_URL}/users`);
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
