@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from . import models
-from .routers import cities, posts, users, files
+from .models import Base
+from .routers import cities, posts, users, files, auth
 from .database import engine
 
-models.Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -13,6 +13,7 @@ app.include_router(cities.router, prefix="/cities", tags=["cities"])
 app.include_router(posts.router, prefix="/posts", tags=["posts"])
 app.include_router(users.router, prefix="/users", tags=["users"])
 app.include_router(files.router, prefix="/files", tags=["files"])
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
 
 origins = [
     "http://localhost",

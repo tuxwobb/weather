@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
 from .. import schemas
 from .. import crud
 from ..database import get_db
-from sqlalchemy.orm import Session
+from ..dependencies import get_current_active_user
 
 router = APIRouter()
 
@@ -21,19 +22,25 @@ async def read_post(post_id: int, db: Session = Depends(get_db)):
     return crud.get_post(db, post_id=post_id)
 
 
-@router.post("/", response_model=schemas.Post)
+@router.post(
+    "/", response_model=schemas.Post, dependencies=[Depends(get_current_active_user)]
+)
 async def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
     """Create post"""
     return crud.create_post(db=db, post=post)
 
 
-@router.delete("/{post_id}")
+@router.delete("/{post_id}", dependencies=[Depends(get_current_active_user)])
 async def delete_post(post_id: int, db: Session = Depends(get_db)):
     """Delete post"""
     return crud.delete_post(db=db, post_id=post_id)
 
 
-@router.patch("/{post_id}", response_model=schemas.Post)
+@router.patch(
+    "/{post_id}",
+    response_model=schemas.Post,
+    dependencies=[Depends(get_current_active_user)],
+)
 async def update_post(
     post_id: int, post: schemas.PostCreate, db: Session = Depends(get_db)
 ):

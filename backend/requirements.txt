@@ -1,3 +1,5 @@
 fastapi[standard]
 pytest
 SQLAlchemy
+pyjwt
+passlib[bcrypt]

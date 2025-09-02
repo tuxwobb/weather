@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
 from . import models, schemas
+from passlib.context import CryptContext
 
 
 # Cities
@@ -106,13 +107,15 @@ def get_user(db: Session, user_id: int):
 
 
 def create_user(db: Session, user: schemas.UserCreate):
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    hashed_password = pwd_context.hash(user.password)
     db_user = models.User(
         fullname=user.fullname,
         username=user.username,
         email=user.email,
         active=False,
         admin=False,
-        password=user.password,
+        password=hashed_password,
     )
     db.add(db_user)
     db.commit()
