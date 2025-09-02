@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .models import Base
-from .routers import cities, posts, users, files, auth
 from .database import engine
+from .routers import cities, posts, users, files, auth
 
 Base.metadata.create_all(bind=engine)
 

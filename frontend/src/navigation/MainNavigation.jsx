@@ -1,6 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Form, useLoaderData } from "react-router-dom";
 
 export default function MainNavigation() {
+  const token = useLoaderData("root");
+
   return (
     <nav
       className="navbar navbar-expand-lg bg-dark border-bottom border-body"
@@ -32,23 +34,27 @@ export default function MainNavigation() {
             <NavLink to="/blog" className="nav-link" aria-current="page" end>
               Blog
             </NavLink>
-            <NavLink
-              to="/files"
-              className="nav-link disabled"
-              aria-current="page"
-              end
-            >
-              Files
-            </NavLink>
-            <NavLink
-              to="/gallery"
-              className="nav-link disabled"
-              aria-disabled="true"
-              aria-current="page"
-              end
-            >
-              Gallery
-            </NavLink>
+            {token && (
+              <NavLink
+                to="/files"
+                className="nav-link disabled"
+                aria-current="page"
+                end
+              >
+                Files
+              </NavLink>
+            )}
+            {token && (
+              <NavLink
+                to="/gallery"
+                className="nav-link disabled"
+                aria-disabled="true"
+                aria-current="page"
+                end
+              >
+                Gallery
+              </NavLink>
+            )}
             <a
               className="nav-link"
               aria-disabled="true"
@@ -61,6 +67,18 @@ export default function MainNavigation() {
             <NavLink to="/users" className="nav-link" aria-current="page" end>
               Users
             </NavLink>
+            {!token && (
+              <NavLink to="/login" className="nav-link" aria-current="page" end>
+                Login
+              </NavLink>
+            )}
+            {token && (
+              <Form method="post" action="/logout">
+                <button className="nav-link" type="submit">
+                  Logout
+                </button>
+              </Form>
+            )}
           </div>
         </div>
       </div>

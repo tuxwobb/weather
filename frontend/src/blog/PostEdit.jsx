@@ -10,7 +10,7 @@ function PostEdit() {
 
 export default PostEdit;
 
-export async function editPostAction({ request }) {
+export async function action({ request }) {
   const formData = await request.formData();
   const editedPost = {
     id: formData.get("id"),

@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./Root.jsx";
+import { tokenLoader } from "./helpers.js";
 import Error from "./error/Error.jsx";
 import Home from "./home/Home.jsx";
 import Weather from "./weather/Weather.jsx";
@@ -8,29 +9,44 @@ import Blog from "./blog/Blog.jsx";
 import { getPosts as postsLoader } from "./http.js";
 import PostDetail from "./blog/PostDetail.jsx";
 import { getPost as postLoader } from "./http.js";
-import PostEdit from "./blog/PostEdit.jsx";
-import { editPostAction } from "./blog/PostEdit.jsx";
-import PostNew from "./blog/PostNew.jsx";
-import { newPostAction } from "./blog/PostNew.jsx";
+import PostEdit, { action as editPostAction } from "./blog/PostEdit.jsx";
+import PostNew, { action as newPostAction } from "./blog/PostNew.jsx";
 import Files from "./files/Files.jsx";
 import Gallery from "./gallery/Gallery.jsx";
 import Users from "./users/Users.jsx";
 import { getUsers as usersLoader } from "./http.js";
+import Login, { action as loginAction } from "./auth/Login.jsx";
+import { action as logoutAction } from "./auth/Logout.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <Error />,
+    id: "root",
+    loader: tokenLoader,
     children: [
       {
         path: "/",
         element: <Home />,
       },
+
+      {
+        path: "/login",
+        element: <Login />,
+        action: loginAction,
+      },
+
+      {
+        path: "/logout",
+        action: logoutAction,
+      },
+
       {
         path: "/weather",
         element: <Weather />,
       },
+
       {
         path: "/blog",
         children: [
@@ -96,10 +112,12 @@ const router = createBrowserRouter([
         path: "/files",
         element: <Files />,
       },
+
       {
         path: "/gallery",
         element: <Gallery />,
       },
+
       {
         path: "/users",
         element: <Users />,

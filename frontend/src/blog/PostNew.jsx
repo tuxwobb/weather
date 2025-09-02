@@ -7,7 +7,7 @@ export default function PostNew() {
 }
 
 // action to process new post
-export async function newPostAction({ request }) {
+export async function action({ request }) {
   const formData = await request.formData();
   const newPost = {
     title: formData.get("title"),

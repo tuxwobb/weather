@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from .. import schemas
 from .. import crud
 from ..database import get_db
+from ..dependencies import get_current_active_user
 
 router = APIRouter()
 
@@ -28,19 +29,25 @@ async def read_city(city_id: int, db: Session = Depends(get_db)):
     return crud.get_city(db, city_id=city_id)
 
 
-@router.post("/", response_model=schemas.City)
+@router.post(
+    "/", response_model=schemas.City, dependencies=[Depends(get_current_active_user)]
+)
 async def create_city(city: schemas.CityCreate, db: Session = Depends(get_db)):
     """Create city"""
     return crud.create_city(db=db, city=city)
 
 
-@router.delete("/{city_id}")
+@router.delete("/{city_id}", dependencies=[Depends(get_current_active_user)])
 async def delete_city(city_id: int, db: Session = Depends(get_db)):
     """Delete city"""
     return crud.delete_city(db=db, city_id=city_id)
 
 
-@router.patch("/{city_id}", response_model=schemas.City)
+@router.patch(
+    "/{city_id}",
+    response_model=schemas.City,
+    dependencies=[Depends(get_current_active_user)],
+)
 async def update_city(
     city_id: int, city: schemas.CityCreate, db: Session = Depends(get_db)
 ):
