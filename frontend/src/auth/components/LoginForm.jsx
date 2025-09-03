@@ -2,7 +2,6 @@ import { Form, useActionData } from "react-router-dom";
 
 export default function LoginForm() {
   const data = useActionData();
-  console.log(data);
 
   return (
     <div className="container mt-3">

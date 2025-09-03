@@ -20,6 +20,7 @@ export async function action({ request }) {
       password: formData.get("password"),
     }).toString(),
   });
+  const resData = await response.json();
 
   if (response.status === 401) {
     return resData;
@@ -29,7 +30,6 @@ export async function action({ request }) {
     throw new Error(resData.message || "error occured");
   }
 
-  const resData = await response.json();
   localStorage.setItem("token", resData.access_token);
   return redirect("/");
 }

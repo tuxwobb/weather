@@ -1,3 +1,5 @@
+import { redirect } from "react-router-dom";
+
 export function toIsoString(date) {
   var tzo = -date.getTimezoneOffset(),
     dif = tzo >= 0 ? "+" : "-",
@@ -31,4 +33,12 @@ export function getAuthToken() {
 
 export function tokenLoader() {
   return getAuthToken();
+}
+
+export function checkAuthLoader() {
+  const token = getAuthToken();
+
+  if (!token) {
+    return redirect("/login");
+  }
 }

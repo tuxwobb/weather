@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./Root.jsx";
-import { tokenLoader } from "./helpers.js";
+import { checkAuthLoader, tokenLoader } from "./helpers.js";
 import Error from "./error/Error.jsx";
 import Home from "./home/Home.jsx";
 import Weather from "./weather/Weather.jsx";
@@ -95,6 +95,7 @@ const router = createBrowserRouter([
             path: "/blog/new",
             element: <PostNew />,
             action: newPostAction,
+            loader: checkAuthLoader,
             errorElement: (
               <div className="container">
                 <div className="row mt-3">
@@ -111,11 +112,13 @@ const router = createBrowserRouter([
       {
         path: "/files",
         element: <Files />,
+        loader: checkAuthLoader,
       },
 
       {
         path: "/gallery",
         element: <Gallery />,
+        loader: checkAuthLoader,
       },
 
       {

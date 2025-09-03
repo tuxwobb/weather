@@ -93,7 +93,6 @@ export async function deleteCity(city_id) {
   return resData;
 }
 
-// in loader
 export async function getPosts() {
   const response = await fetch(`${CUSTOM_API_URL}/posts`);
   const resData = await response.json();
