@@ -64,9 +64,11 @@ export default function MainNavigation() {
             >
               BC API
             </a>
-            <NavLink to="/users" className="nav-link" aria-current="page" end>
-              Users
-            </NavLink>
+            {token && (
+              <NavLink to="/users" className="nav-link" aria-current="page" end>
+                Users
+              </NavLink>
+            )}
             {!token && (
               <NavLink to="/login" className="nav-link" aria-current="page" end>
                 Login

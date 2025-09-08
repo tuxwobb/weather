@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Posts from "./Posts";
+import { getAuthToken } from "../helpers";
 
 export default function Blog() {
   const [filterText, setFilterText] = useState("");
   const blogPosts = useLoaderData();
+  const loggedIn = getAuthToken() ? true : false;
 
   return (
     <div className="container mt-3">
@@ -21,13 +23,15 @@ export default function Blog() {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-3">
-          <Link className="btn btn-sm btn-secondary" to="/blog/new">
-            New post
-          </Link>
+      {loggedIn && (
+        <div className="row">
+          <div className="col-3">
+            <Link className="btn btn-sm btn-secondary" to="/blog/new">
+              New post
+            </Link>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="row">
         <Posts filterText={filterText} blogPosts={blogPosts} />

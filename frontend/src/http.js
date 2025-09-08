@@ -200,6 +200,8 @@ export async function getUsers() {
 }
 
 export async function getUser(user_id) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/users/${user_id}`, {
     method: "GET",
     headers: {

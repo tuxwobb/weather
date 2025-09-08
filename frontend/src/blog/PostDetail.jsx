@@ -1,10 +1,12 @@
 import { Link, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import { deletePost } from "../http";
 import parse from "html-react-parser";
+import { getAuthToken } from "../helpers";
 
 export default function PostDetail() {
   const navigate = useNavigate();
   const post = useLoaderData();
+  const isLoggedIn = getAuthToken() ? true : false;
 
   async function handleDeletePost(post_id) {
     if (confirm("Are you sure to delete post?")) {
@@ -25,26 +27,30 @@ export default function PostDetail() {
           {parse(post.body)}
           <hr />
           <p>
-            {post.author} | {post.published}
+            {post.author} | {post.published.slice(0, 10)}
           </p>
           <p>
             <Link className="btn btn-sm btn-light" to="/blog">
               Back
             </Link>{" "}
-            <Link
-              className="btn btn-sm btn-secondary"
-              to={`/blog/${post.id}/edit`}
-            >
-              Edit
-            </Link>{" "}
-            <button
-              className="btn btn-sm btn-danger"
-              onClick={() => {
-                handleDeletePost(post.id);
-              }}
-            >
-              Delete
-            </button>
+            {isLoggedIn && (
+              <>
+                <Link
+                  className="btn btn-sm btn-secondary"
+                  to={`/blog/${post.id}/edit`}
+                >
+                  Edit
+                </Link>{" "}
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => {
+                    handleDeletePost(post.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </>
+            )}
           </p>
         </div>
       </div>

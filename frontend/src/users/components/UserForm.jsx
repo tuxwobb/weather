@@ -1,6 +1,7 @@
-import { Form } from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
 
 export default function UserForm({ user }) {
+  const data = useActionData();
   return (
     <div className="container mt-3">
       <div className="row">
@@ -11,6 +12,7 @@ export default function UserForm({ user }) {
       </div>
       <div className="row">
         <div className="col-md-6">
+          {data && <p className="alert alert-danger">{data.detail}</p>}
           <Form method="post">
             <div className="mb-2">
               <label className="form-label">Fullname</label>
@@ -39,12 +41,29 @@ export default function UserForm({ user }) {
                 defaultValue={user && user.email}
               />
             </div>
-            <input
-              type="text"
-              name="id"
-              defaultValue={user && user.id}
-              hidden
-            />
+            {!user && (
+              <div className="mb-2">
+                <label className="form-label">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control form-control-sm"
+                />
+              </div>
+            )}
+            {!user && (
+              <div className="mb-2">
+                <label className="form-label">Password confirmation</label>
+                <input
+                  type="password"
+                  name="password_confirmation"
+                  className="form-control form-control-sm"
+                />
+              </div>
+            )}
+            {user && (
+              <input type="text" name="id" defaultValue={user.id} hidden />
+            )}
             <button type="submit" className="btn btn-sm btn-secondary">
               Submit
             </button>

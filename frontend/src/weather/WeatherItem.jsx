@@ -4,6 +4,7 @@ import {
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
 } from "../http";
+import { getAuthToken } from "../helpers";
 
 export default function WeatherItem({
   city,
@@ -13,6 +14,7 @@ export default function WeatherItem({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
+  const isLoggedIn = getAuthToken() ? true : false;
 
   useEffect(() => {
     async function fetchWeatherData() {
@@ -97,12 +99,14 @@ export default function WeatherItem({
             >
               Detail
             </button>{" "}
-            <button
-              className="btn btn-sm btn-secondary mt-2"
-              onClick={() => handleDelete(city.id)}
-            >
-              Delete
-            </button>
+            {isLoggedIn && (
+              <button
+                className="btn btn-sm btn-secondary mt-2"
+                onClick={() => handleDelete(city.id)}
+              >
+                Delete
+              </button>
+            )}
           </p>
         </div>
       )}
