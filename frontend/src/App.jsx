@@ -6,17 +6,22 @@ import Error from "./error/Error.jsx";
 import Home from "./home/Home.jsx";
 import Weather from "./weather/Weather.jsx";
 import Blog from "./blog/Blog.jsx";
-import { getPosts as postsLoader } from "./http.js";
 import PostDetail from "./blog/PostDetail.jsx";
-import { getPost as postLoader } from "./http.js";
 import PostEdit, { action as editPostAction } from "./blog/PostEdit.jsx";
 import PostNew, { action as newPostAction } from "./blog/PostNew.jsx";
 import Files from "./files/Files.jsx";
 import Gallery from "./gallery/Gallery.jsx";
 import Users from "./users/Users.jsx";
-import { getUsers as usersLoader } from "./http.js";
+import UserNew, { action as newUserAction } from "./users/UserNew.jsx";
+import UserEdit, { action as editUserAction } from "./users/UserEdit.jsx";
 import Login, { action as loginAction } from "./auth/Login.jsx";
 import { action as logoutAction } from "./auth/Logout.jsx";
+import {
+  getPosts as postsLoader,
+  getPost as postLoader,
+  getUsers as usersLoader,
+  getUser as userLoader,
+} from "./http.js";
 
 const router = createBrowserRouter([
   {
@@ -123,17 +128,42 @@ const router = createBrowserRouter([
 
       {
         path: "/users",
-        element: <Users />,
-        loader: usersLoader,
-        errorElement: (
-          <div className="container">
-            <div className="row mt-3">
-              <div className="col">
-                <p>Error during fetching data</p>
+        children: [
+          {
+            index: true,
+            element: <Users />,
+            loader: usersLoader,
+            errorElement: (
+              <div className="container">
+                <div className="row mt-3">
+                  <div className="col">
+                    <p>Error during fetching data</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ),
+            ),
+          },
+          {
+            path: "/users/new",
+            element: <UserNew />,
+            action: newUserAction,
+          },
+          {
+            path: "/users/:userId/edit",
+            element: <UserEdit />,
+            action: editUserAction,
+            loader: ({ params }) => userLoader(params.userId),
+            errorElement: (
+              <div className="container">
+                <div className="row mt-3">
+                  <div className="col">
+                    <p>Error during pushing data</p>
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+        ],
       },
     ],
   },

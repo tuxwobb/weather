@@ -59,6 +59,8 @@ export async function getCities() {
 }
 
 export async function addCity(city_name) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/cities`, {
     method: "POST",
     headers: {
@@ -77,13 +79,16 @@ export async function addCity(city_name) {
 }
 
 export async function deleteCity(city_id) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/cities/${city_id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${getAuthToken}`,
+      Authorization: `Bearer ${getAuthToken()}`,
     },
   });
+  console.log(response);
   const resData = await response.json();
 
   if (!response.ok) {
@@ -117,6 +122,8 @@ export async function getPost(post_id) {
 }
 
 export async function createPost(post) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/posts`, {
     method: "POST",
     headers: {
@@ -135,6 +142,8 @@ export async function createPost(post) {
 }
 
 export async function editPost(post) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/posts/${post.id}`, {
     method: "PATCH",
     headers: {
@@ -153,6 +162,8 @@ export async function editPost(post) {
 }
 
 export async function deletePost(post_id) {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/posts/${post_id}`, {
     method: "DELETE",
     headers: {
@@ -170,6 +181,8 @@ export async function deletePost(post_id) {
 }
 
 export async function getUsers() {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/users`, {
     method: "GET",
     headers: {
@@ -186,7 +199,92 @@ export async function getUsers() {
   return resData;
 }
 
+export async function getUser(user_id) {
+  const response = await fetch(`${CUSTOM_API_URL}/users/${user_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function createUser(user) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`${CUSTOM_API_URL}/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: JSON.stringify(user),
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function editUser(user) {
+  if (!getAuthToken()) return redirect("/login");
+
+  console.log(user);
+
+  const response = await fetch(`${CUSTOM_API_URL}/users/${user.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: JSON.stringify({
+      fullname: user.fullname,
+      username: user.username,
+      email: user.email,
+    }),
+  });
+  const resData = await response.json();
+  console.log(resData);
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function deleteUser(user_id) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`${CUSTOM_API_URL}/users/${user_id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
 export async function getMe() {
+  if (!getAuthToken()) return redirect("/login");
+
   const response = await fetch(`${CUSTOM_API_URL}/auth/me`, {
     method: "GET",
     headers: {

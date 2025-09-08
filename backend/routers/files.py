@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, Depends
-from ..dependencies import get_current_active_user
+from dependencies import get_current_active_user
 
 router = APIRouter()
 

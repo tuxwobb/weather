@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from .. import schemas
-from .. import crud
-from ..database import get_db
-from ..dependencies import get_current_admin_user
+import schemas
+import crud
+from database import get_db
+from dependencies import get_current_admin_user
 
 router = APIRouter()
 
@@ -55,7 +55,7 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
     dependencies=[Depends(get_current_admin_user)],
 )
 async def update_user(
-    user_id: int, user: schemas.UserCreate, db: Session = Depends(get_db)
+    user_id: int, user: schemas.UserBase, db: Session = Depends(get_db)
 ):
     """Update user"""
     return crud.update_user(db=db, user_id=user_id, user=user)

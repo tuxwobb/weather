@@ -16,7 +16,7 @@ cd weather/frontend
 python -m venv .venv
 <activate virtual environment>
 pip install -r requirements.txt
-python main.py
+uvicorn main:app --port 8000
 ```
 
 ## Setup

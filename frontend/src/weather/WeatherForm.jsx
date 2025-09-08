@@ -59,7 +59,7 @@ export default function WeatherForm({ setCities }) {
           <p>
             <input
               className="form-control form-control-sm mb-1"
-              type="text"
+              type="search"
               name="city"
               placeholder="Search..."
               ref={cityRef}

@@ -2,10 +2,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from .. import schemas
-from .. import crud
-from ..database import get_db
-from ..dependencies import get_current_active_user
+import schemas
+import crud
+from database import get_db
+from dependencies import get_current_active_user
 
 router = APIRouter()
 
