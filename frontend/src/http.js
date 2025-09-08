@@ -284,6 +284,50 @@ export async function deleteUser(user_id) {
   return resData;
 }
 
+export async function activateUser(user_id) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(
+    `${CUSTOM_API_URL}/users/activate_user/${user_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
+  );
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function adminUser(user_id) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(
+    `${CUSTOM_API_URL}/users/admin_user/${user_id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
+  );
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
 export async function getMe() {
   if (!getAuthToken()) return redirect("/login");
 

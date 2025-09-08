@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export default function User({ user, handleDeleteUser }) {
+export default function User({ user, handleDeleteUser, handleActivateUser }) {
   return (
     <>
       <tr>
@@ -25,7 +25,18 @@ export default function User({ user, handleDeleteUser }) {
             }}
           >
             Delete
-          </button>
+          </button>{" "}
+          {!user.active && (
+            <button
+              type="button"
+              className="btn btn-sm btn-success"
+              onClick={() => {
+                handleActivateUser(user.id);
+              }}
+            >
+              Activate
+            </button>
+          )}
         </td>
       </tr>
     </>

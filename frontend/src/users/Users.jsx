@@ -1,11 +1,12 @@
-import { useLoaderData, Link } from "react-router-dom";
+import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import User from "./User";
 import SearchForm from "./components/SearchForm";
 import { useState } from "react";
-import { deleteUser } from "../http";
+import { activateUser, deleteUser } from "../http";
 
 export default function Users() {
   const users = useLoaderData();
+  const revalidator = useRevalidator();
   const [filteredUsers, setFilteredUsers] = useState(users);
 
   async function handleDeleteUser(id) {
@@ -13,6 +14,13 @@ export default function Users() {
     await deleteUser(id);
     const newUsers = users.filter((user) => user.id !== id);
     setFilteredUsers(newUsers);
+  }
+
+  async function handleActivateUser(id) {
+    if (!window.confirm("Are you sure you want to activate this user?")) return;
+    await activateUser(id);
+    revalidator.revalidate();
+    setFilteredUsers(users);
   }
 
   return (
@@ -54,6 +62,7 @@ export default function Users() {
                     {filteredUsers.map((user) => (
                       <User
                         handleDeleteUser={handleDeleteUser}
+                        handleActivateUser={handleActivateUser}
                         user={user}
                         key={user.id}
                       />
