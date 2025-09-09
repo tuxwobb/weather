@@ -88,7 +88,6 @@ export async function deleteCity(city_id) {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   });
-  console.log(response);
   const resData = await response.json();
 
   if (!response.ok) {
@@ -241,8 +240,6 @@ export async function createUser(user) {
 export async function editUser(user) {
   if (!getAuthToken()) return redirect("/login");
 
-  console.log(user);
-
   const response = await fetch(`${CUSTOM_API_URL}/users/${user.id}`, {
     method: "PATCH",
     headers: {
@@ -256,7 +253,6 @@ export async function editUser(user) {
     }),
   });
   const resData = await response.json();
-  console.log(resData);
 
   if (!response.ok) {
     throw new Error(resData.message || "error occured");
@@ -338,6 +334,28 @@ export async function getMe() {
       Authorization: `Bearer ${getAuthToken()}`,
     },
   });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function changePassword(newPassword) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(
+    `${CUSTOM_API_URL}/auth/change_password?new_password=${newPassword}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getAuthToken()}`,
+      },
+    }
+  );
   const resData = await response.json();
 
   if (!response.ok) {

@@ -2,7 +2,7 @@ import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import User from "./User";
 import SearchForm from "./components/SearchForm";
 import { useState } from "react";
-import { activateUser, deleteUser } from "../http";
+import { activateUser, adminUser, deleteUser } from "../http";
 
 export default function Users() {
   const users = useLoaderData();
@@ -19,8 +19,18 @@ export default function Users() {
   async function handleActivateUser(id) {
     if (!window.confirm("Are you sure you want to activate this user?")) return;
     await activateUser(id);
-    revalidator.revalidate();
-    setFilteredUsers(users);
+    await revalidator.revalidate();
+    const newUsers = users;
+    setFilteredUsers(newUsers);
+  }
+
+  async function handleAdminUser(id) {
+    if (!window.confirm("Are you sure you want to make this user admin?"))
+      return;
+    await adminUser(id);
+    await revalidator.revalidate();
+    const newUsers = users;
+    setFilteredUsers(newUsers);
   }
 
   return (
@@ -63,6 +73,7 @@ export default function Users() {
                       <User
                         handleDeleteUser={handleDeleteUser}
                         handleActivateUser={handleActivateUser}
+                        handleAdminUser={handleAdminUser}
                         user={user}
                         key={user.id}
                       />

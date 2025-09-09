@@ -95,3 +95,16 @@ async def get_current_admin_user(
     if not current_user.admin:
         raise HTTPException(status_code=403, detail="Non admin user")
     return current_user
+
+
+def change_user_password(user_id: int, password: str):
+    db = SessionLocal()
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    hashed_password = pwd_context.hash(password)
+    db_user.password = hashed_password
+    db.commit()
+    db.refresh(db_user)
+    return db_user

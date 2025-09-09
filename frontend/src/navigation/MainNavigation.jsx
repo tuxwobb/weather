@@ -75,6 +75,16 @@ export default function MainNavigation() {
               </NavLink>
             )}
             {token && (
+              <NavLink
+                to="/profile"
+                className="nav-link"
+                aria-current="page"
+                end
+              >
+                Profile
+              </NavLink>
+            )}
+            {token && (
               <Form method="post" action="/logout">
                 <button className="nav-link" type="submit">
                   Logout

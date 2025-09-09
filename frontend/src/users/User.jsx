@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-export default function User({ user, handleDeleteUser, handleActivateUser }) {
+export default function User({
+  user,
+  handleDeleteUser,
+  handleActivateUser,
+  handleAdminUser,
+}) {
   return (
     <>
       <tr>
@@ -17,15 +22,17 @@ export default function User({ user, handleDeleteUser, handleActivateUser }) {
           >
             Edit
           </Link>{" "}
-          <button
-            type="button"
-            className="btn btn-sm btn-danger"
-            onClick={() => {
-              handleDeleteUser(user.id);
-            }}
-          >
-            Delete
-          </button>{" "}
+          {user.id !== 1 && (
+            <button
+              type="button"
+              className="btn btn-sm btn-danger"
+              onClick={() => {
+                handleDeleteUser(user.id);
+              }}
+            >
+              Delete
+            </button>
+          )}{" "}
           {!user.active && (
             <button
               type="button"
@@ -35,6 +42,17 @@ export default function User({ user, handleDeleteUser, handleActivateUser }) {
               }}
             >
               Activate
+            </button>
+          )}{" "}
+          {!user.admin && (
+            <button
+              type="button"
+              className="btn btn-sm btn-primary"
+              onClick={() => {
+                handleAdminUser(user.id);
+              }}
+            >
+              Admin
             </button>
           )}
         </td>

@@ -16,12 +16,17 @@ import UserNew, { action as newUserAction } from "./users/UserNew.jsx";
 import UserEdit, { action as editUserAction } from "./users/UserEdit.jsx";
 import Login, { action as loginAction } from "./auth/Login.jsx";
 import { action as logoutAction } from "./auth/Logout.jsx";
+import Profile from "./profile/Profile.jsx";
 import {
   getPosts as postsLoader,
   getPost as postLoader,
   getUsers as usersLoader,
   getUser as userLoader,
+  getMe as meLoader,
 } from "./http.js";
+import ChangePassword, {
+  action as changePasswordAction,
+} from "./profile/ChangePassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -158,6 +163,39 @@ const router = createBrowserRouter([
                 <div className="row mt-3">
                   <div className="col">
                     <p>Error during pushing data</p>
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+        ],
+      },
+      {
+        path: "/profile",
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+            loader: meLoader,
+            errorElement: (
+              <div className="container">
+                <div className="row mt-3">
+                  <div className="col">
+                    <p>Error during fetching data</p>
+                  </div>
+                </div>
+              </div>
+            ),
+          },
+          {
+            path: "/profile/change_password",
+            element: <ChangePassword />,
+            action: changePasswordAction,
+            errorElement: (
+              <div className="container">
+                <div className="row mt-3">
+                  <div className="col">
+                    <p>Error during fetching data</p>
                   </div>
                 </div>
               </div>

@@ -2,8 +2,14 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from dependencies import authenticate_user, create_access_token, get_current_user
+from dependencies import (
+    authenticate_user,
+    create_access_token,
+    get_current_user,
+    change_user_password,
+)
 from schemas import Token, User
+from models import User as UserModel
 
 router = APIRouter()
 
@@ -38,3 +44,11 @@ async def login_for_access_token(
 @router.get("/me", response_model=User)
 async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
     return current_user
+
+
+@router.post("/change_password")
+async def change_password(
+    new_password: str, current_user: Annotated[User, Depends(get_current_user)]
+):
+    change_user_password(user_id=current_user.id, password=new_password)
+    return {"message": "Password changed successfully."}
