@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
 import schemas
 import crud
-from database import get_db
 from dependencies import get_current_admin_user
 
 router = APIRouter()
@@ -14,9 +12,9 @@ router = APIRouter()
     response_model=list[schemas.User],
     dependencies=[Depends(get_current_admin_user)],
 )
-async def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+async def read_users(skip: int = 0, limit: int = 10):
     """Get all users"""
-    return crud.get_users(db, skip=skip, limit=limit)
+    return crud.get_users(skip=skip, limit=limit)
 
 
 @router.get(
@@ -24,9 +22,9 @@ async def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_d
     response_model=schemas.User,
     dependencies=[Depends(get_current_admin_user)],
 )
-async def read_user(user_id: int, db: Session = Depends(get_db)):
+async def read_user(user_id: int):
     """Get user by id"""
-    user = crud.get_user(db, user_id=user_id)
+    user = crud.get_user(user_id=user_id)
     return user
 
 
@@ -35,18 +33,18 @@ async def read_user(user_id: int, db: Session = Depends(get_db)):
     response_model=schemas.User,
     dependencies=[Depends(get_current_admin_user)],
 )
-async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+async def create_user(user: schemas.UserCreate):
     """Create user"""
-    return crud.create_user(db=db, user=user)
+    return crud.create_user(user=user)
 
 
 @router.delete(
     "/{user_id}",
     dependencies=[Depends(get_current_admin_user)],
 )
-async def delete_user(user_id: int, db: Session = Depends(get_db)):
+async def delete_user(user_id: int):
     """Delete user"""
-    return crud.delete_user(db=db, user_id=user_id)
+    return crud.delete_user(user_id=user_id)
 
 
 @router.patch(
@@ -54,11 +52,9 @@ async def delete_user(user_id: int, db: Session = Depends(get_db)):
     response_model=schemas.User,
     dependencies=[Depends(get_current_admin_user)],
 )
-async def update_user(
-    user_id: int, user: schemas.UserBase, db: Session = Depends(get_db)
-):
+async def update_user(user_id: int, user: schemas.UserBase):
     """Update user"""
-    return crud.update_user(db=db, user_id=user_id, user=user)
+    return crud.update_user(user_id=user_id, user=user)
 
 
 @router.patch(
@@ -66,9 +62,9 @@ async def update_user(
     response_model=schemas.User,
     dependencies=[Depends(get_current_admin_user)],
 )
-async def make_active(user_id: int, db: Session = Depends(get_db)):
+async def make_active(user_id: int):
     """Make user active"""
-    return crud.make_active_user(db=db, user_id=user_id)
+    return crud.make_active_user(user_id=user_id)
 
 
 @router.patch(
@@ -76,6 +72,6 @@ async def make_active(user_id: int, db: Session = Depends(get_db)):
     response_model=schemas.User,
     dependencies=[Depends(get_current_admin_user)],
 )
-async def make_admin(user_id: int, db: Session = Depends(get_db)):
+async def make_admin(user_id: int):
     """Make user admin"""
-    return crud.make_admin_user(db=db, user_id=user_id)
+    return crud.make_admin_user(user_id=user_id)

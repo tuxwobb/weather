@@ -3,11 +3,13 @@ from fastapi import HTTPException
 
 import models, schemas
 from passlib.context import CryptContext
+from database import SessionLocal
 
 
 # Cities
-def get_cities(db: Session, commons):
+def get_cities(commons):
     search = "%{}%".format(commons["name"] if commons["name"] else "")
+    db = SessionLocal()
     return (
         db.query(models.City)
         .filter(models.City.name.like(search))
@@ -17,14 +19,16 @@ def get_cities(db: Session, commons):
     )
 
 
-def get_city(db: Session, city_id: int):
+def get_city(city_id: int):
+    db = SessionLocal()
     city = db.query(models.City).filter(models.City.id == city_id).first()
     if city is None:
         raise HTTPException(status_code=404, detail="City not found")
     return city
 
 
-def create_city(db: Session, city: schemas.CityCreate):
+def create_city(city: schemas.CityCreate):
+    db = SessionLocal()
     db_city = models.City(name=city.name)
     db.add(db_city)
     db.commit()
@@ -32,7 +36,8 @@ def create_city(db: Session, city: schemas.CityCreate):
     return db_city
 
 
-def update_city(db: Session, city_id: int, city: schemas.CityCreate):
+def update_city(city_id: int, city: schemas.CityCreate):
+    db = SessionLocal()
     db_city = db.query(models.City).filter(models.City.id == city_id).first()
     if db_city is None:
         raise HTTPException(status_code=404, detail="City not found")
@@ -42,25 +47,29 @@ def update_city(db: Session, city_id: int, city: schemas.CityCreate):
     return db_city
 
 
-def delete_city(db: Session, city_id: int):
+def delete_city(city_id: int):
+    db = SessionLocal()
     db.query(models.City).filter(models.City.id == city_id).delete()
     db.commit()
     return {"message": "City deleted"}
 
 
 # Posts
-def get_posts(db: Session, skip: int = 0, limit: int = 10):
+def get_posts(skip: int = 0, limit: int = 10):
+    db = SessionLocal()
     return db.query(models.Post).offset(skip).limit(limit).all()
 
 
-def get_post(db: Session, post_id: int):
+def get_post(post_id: int):
+    db = SessionLocal()
     post = db.query(models.Post).filter(models.Post.id == post_id).first()
     if post is None:
         raise HTTPException(status_code=404, detail="Post not found")
     return post
 
 
-def create_post(db: Session, post: schemas.PostCreate):
+def create_post(post: schemas.PostCreate):
+    db = SessionLocal()
     db_post = models.Post(
         title=post.title,
         body=post.body,
@@ -74,7 +83,8 @@ def create_post(db: Session, post: schemas.PostCreate):
     return db_post
 
 
-def update_post(db: Session, post_id: int, post: schemas.PostCreate):
+def update_post(post_id: int, post: schemas.PostCreate):
+    db = SessionLocal()
     db_post = db.query(models.Post).filter(models.Post.id == post_id).first()
     if db_post is None:
         raise HTTPException(status_code=404, detail="Post not found")
@@ -88,25 +98,29 @@ def update_post(db: Session, post_id: int, post: schemas.PostCreate):
     return db_post
 
 
-def delete_post(db: Session, post_id: int):
+def delete_post(post_id: int):
+    db = SessionLocal()
     db.query(models.Post).filter(models.Post.id == post_id).delete()
     db.commit()
     return {"message": "Post deleted"}
 
 
 # Users
-def get_users(db: Session, skip: int = 0, limit: int = 10):
+def get_users(skip: int = 0, limit: int = 10):
+    db = SessionLocal()
     return db.query(models.User).offset(skip).limit(limit).all()
 
 
-def get_user(db: Session, user_id: int):
+def get_user(user_id: int):
+    db = SessionLocal()
     user = db.query(models.User).filter(models.User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
 
-def create_user(db: Session, user: schemas.UserCreate):
+def create_user(user: schemas.UserCreate):
+    db = SessionLocal()
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(user.password)
     db_user = models.User(
@@ -123,7 +137,8 @@ def create_user(db: Session, user: schemas.UserCreate):
     return db_user
 
 
-def update_user(db: Session, user_id: int, user: schemas.UserBase):
+def update_user(user_id: int, user: schemas.UserBase):
+    db = SessionLocal()
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -135,13 +150,15 @@ def update_user(db: Session, user_id: int, user: schemas.UserBase):
     return db_user
 
 
-def delete_user(db: Session, user_id: int):
+def delete_user(user_id: int):
+    db = SessionLocal()
     db.query(models.User).filter(models.User.id == user_id).delete()
     db.commit()
     return {"message": "User deleted"}
 
 
-def make_active_user(db: Session, user_id: int):
+def make_active_user(user_id: int):
+    db = SessionLocal()
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -151,7 +168,8 @@ def make_active_user(db: Session, user_id: int):
     return db_user
 
 
-def make_admin_user(db: Session, user_id: int):
+def make_admin_user(user_id: int):
+    db = SessionLocal()
     db_user = db.query(models.User).filter(models.User.id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")

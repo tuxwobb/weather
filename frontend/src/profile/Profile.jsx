@@ -8,7 +8,7 @@ export default function Profile() {
       <div className="container mt-3">
         <div className="row">
           <div className="col">
-            <h3>User</h3>
+            <h3>User profile</h3>
             <table className="table">
               <tbody>
                 <tr>

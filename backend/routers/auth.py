@@ -9,7 +9,6 @@ from dependencies import (
     change_user_password,
 )
 from schemas import Token, User
-from models import User as UserModel
 
 router = APIRouter()
 

@@ -1,10 +1,8 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 
 import schemas
 import crud
-from database import get_db
 from dependencies import get_current_active_user
 
 router = APIRouter()
@@ -15,32 +13,30 @@ async def common_parameters(name: str | None = None, skip: int = 0, limit: int =
 
 
 @router.get("/", response_model=list[schemas.City])
-async def read_cities(
-    commons: Annotated[dict, Depends(common_parameters)], db: Session = Depends(get_db)
-):
+async def read_cities(commons: Annotated[dict, Depends(common_parameters)]):
     """Get all cities"""
-    cities = crud.get_cities(db, commons)
+    cities = crud.get_cities(commons)
     return cities
 
 
 @router.get("/{city_id}", response_model=schemas.City)
-async def read_city(city_id: int, db: Session = Depends(get_db)):
+async def read_city(city_id: int):
     """Get city by id"""
-    return crud.get_city(db, city_id=city_id)
+    return crud.get_city(city_id=city_id)
 
 
 @router.post(
     "/", response_model=schemas.City, dependencies=[Depends(get_current_active_user)]
 )
-async def create_city(city: schemas.CityCreate, db: Session = Depends(get_db)):
+async def create_city(city: schemas.CityCreate):
     """Create city"""
-    return crud.create_city(db=db, city=city)
+    return crud.create_city(city=city)
 
 
 @router.delete("/{city_id}", dependencies=[Depends(get_current_active_user)])
-async def delete_city(city_id: int, db: Session = Depends(get_db)):
+async def delete_city(city_id: int):
     """Delete city"""
-    return crud.delete_city(db=db, city_id=city_id)
+    return crud.delete_city(city_id=city_id)
 
 
 @router.patch(
@@ -48,8 +44,6 @@ async def delete_city(city_id: int, db: Session = Depends(get_db)):
     response_model=schemas.City,
     dependencies=[Depends(get_current_active_user)],
 )
-async def update_city(
-    city_id: int, city: schemas.CityCreate, db: Session = Depends(get_db)
-):
+async def update_city(city_id: int, city: schemas.CityCreate):
     """Update city"""
-    return crud.update_city(db=db, city_id=city_id, city=city)
+    return crud.update_city(city_id=city_id, city=city)
