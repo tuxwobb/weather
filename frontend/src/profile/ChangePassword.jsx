@@ -13,13 +13,13 @@ export default function ChangePassword() {
       </div>
       {data && (
         <div className="row">
-          <div className="col">
+          <div className="col-md-6 ">
             <p className="alert alert-danger">{data.detail}</p>
           </div>
         </div>
       )}
       <div className="row">
-        <div className="col">
+        <div className="col-md-6">
           <Form method="post">
             <div className="mb-2">
               <label className="form-label">New password</label>

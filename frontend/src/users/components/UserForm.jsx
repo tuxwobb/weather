@@ -65,7 +65,7 @@ export default function UserForm({ user }) {
               <input type="text" name="id" defaultValue={user.id} hidden />
             )}
             <button type="submit" className="btn btn-sm btn-secondary">
-              Submit
+              Save
             </button>
           </Form>
         </div>

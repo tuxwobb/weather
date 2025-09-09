@@ -43,6 +43,13 @@ export default function Profile() {
               className="btn btn-sm btn-secondary"
             >
               Change password
+            </Link>{" "}
+            <Link
+              to={`/users/${user.id}/edit`}
+              type="button"
+              className="btn btn-sm btn-secondary"
+            >
+              Edit profile
             </Link>
           </div>
         </div>
