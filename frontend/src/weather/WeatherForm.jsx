@@ -58,7 +58,7 @@ export default function WeatherForm({ setCities }) {
         <div className="col col-sm-8 col-md-6">
           <p>
             <input
-              className="form-control form-control-sm mb-1"
+              className="form-control form-control-sm mb-2"
               type="search"
               name="city"
               placeholder="Search..."

@@ -37,7 +37,9 @@ def get_user(
     username: str,
 ):
     db = SessionLocal()
-    return db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(User.username == username).first()
+    db.close()
+    return user
 
 
 def authenticate_user(username: str, password: str):
@@ -101,10 +103,12 @@ def change_user_password(user_id: int, password: str):
     db = SessionLocal()
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user is None:
+        db.close()
         raise HTTPException(status_code=404, detail="User not found")
     pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     hashed_password = pwd_context.hash(password)
     db_user.password = hashed_password
     db.commit()
     db.refresh(db_user)
+    db.close()
     return db_user

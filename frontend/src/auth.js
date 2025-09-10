@@ -1,4 +1,5 @@
 import { redirect } from "react-router-dom";
+import { getMe } from "./http";
 
 export function getTokenDuration() {
   const storedExiprationDate = localStorage.getItem("expiration");

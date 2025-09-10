@@ -13,37 +13,56 @@ export default function Home() {
 
           <p>Co všechno můžeš prozkoumat?</p>
 
-          <ul>
-            <li>
-              <Link to="/weather">Počasí</Link> - podívej se jak je u nás nebo u
-              tebe
+          <ul className="list-group list-group-flush mb-2">
+            <li className="list-group-item">
+              <Link to="/weather" className="link-opacity-50-hover">
+                Počasí
+              </Link>{" "}
+              - podívej se jak je u nás nebo u tebe
             </li>
-            <li>
-              <Link to="/blog">Blog</Link> - Blog aplikace, ve které sdílím
-              zajímavé odkazy a postupy pro vývoj v Pythonu, Reactu a v MS
-              Dynamics 365 Business Central
+            <li className="list-group-item">
+              <Link to="/blog" className="link-opacity-50-hover">
+                Blog
+              </Link>{" "}
+              - Blog aplikace, ve které sdílím zajímavé odkazy a postupy pro
+              vývoj v Pythonu, Reactu a v MS Dynamics 365 Business Central
             </li>
-            <li>
-              <Link to="/files">Soubory</Link> - Úložiště souborů
+            <li className="list-group-item">
+              <Link to="/files" className="link-opacity-50-hover">
+                Soubory
+              </Link>{" "}
+              - Úložiště souborů
             </li>
-            <li>
-              <Link to="/gallery">Fotogalerii</Link> - pár fotek ze života
+            <li className="list-group-item">
+              <Link to="/gallery" className="link-opacity-50-hover">
+                Fotogalerii
+              </Link>{" "}
+              - pár fotek ze života
             </li>
           </ul>
 
-          <h4>Externí odkazy</h4>
+          <h4>Podívej se i na externí odkazy</h4>
 
-          <ul>
-            <li>
-              <a href="https://bobkovo.cz">MS Business Central 365 API</a> -
-              Aplikace pro napojení na webové služby MS Business Central
+          <ul className="list-group list-group-flush mb-2">
+            <li className="list-group-item">
+              <a href="https://bobkovo.cz" className="link-opacity-50-hover">
+                MS Business Central 365 API
+              </a>{" "}
+              - Aplikace pro napojení na webové služby MS Business Central
             </li>
-            <li>
-              <a href="https://react.dev">React.dev</a> - Oficiační dokumentace
-              pro React
+            <li className="list-group-item">
+              <a href="https://react.dev" className="link-opacity-50-hover">
+                React.dev
+              </a>{" "}
+              - Oficiační dokumentace pro React
             </li>
-            <li>
-              <a href="https://fastapi.tiangolo.com/">fastapi.tiangolo.com/</a>{" "}
+            <li className="list-group-item">
+              <a
+                href="https://fastapi.tiangolo.com/"
+                className="link-opacity-50-hover"
+              >
+                fastapi.tiangolo.com/
+              </a>{" "}
               - Oficiační dokumentace pro FastAPI
             </li>
           </ul>

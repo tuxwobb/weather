@@ -48,7 +48,7 @@ export async function fetchDetailWeather(apiDetailUrl, apiKey, lat, lon) {
 }
 
 export async function getCities() {
-  const response = await fetch(`${CUSTOM_API_URL}/cities`);
+  const response = await fetch(`${CUSTOM_API_URL}/cities/`);
   const resData = await response.json();
 
   if (!response.ok) {
@@ -61,7 +61,7 @@ export async function getCities() {
 export async function addCity(city_name) {
   if (!getAuthToken()) return redirect("/login");
 
-  const response = await fetch(`${CUSTOM_API_URL}/cities`, {
+  const response = await fetch(`${CUSTOM_API_URL}/cities/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export async function deleteCity(city_id) {
 }
 
 export async function getPosts() {
-  const response = await fetch(`${CUSTOM_API_URL}/posts`);
+  const response = await fetch(`${CUSTOM_API_URL}/posts/`);
   const resData = await response.json();
 
   if (!response.ok) {
@@ -123,7 +123,7 @@ export async function getPost(post_id) {
 export async function createPost(post) {
   if (!getAuthToken()) return redirect("/login");
 
-  const response = await fetch(`${CUSTOM_API_URL}/posts`, {
+  const response = await fetch(`${CUSTOM_API_URL}/posts/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -182,7 +182,7 @@ export async function deletePost(post_id) {
 export async function getUsers() {
   if (!getAuthToken()) return redirect("/login");
 
-  const response = await fetch(`${CUSTOM_API_URL}/users`, {
+  const response = await fetch(`${CUSTOM_API_URL}/users/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -220,7 +220,7 @@ export async function getUser(user_id) {
 export async function createUser(user) {
   if (!getAuthToken()) return redirect("/login");
 
-  const response = await fetch(`${CUSTOM_API_URL}/users`, {
+  const response = await fetch(`${CUSTOM_API_URL}/users/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
