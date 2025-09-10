@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./Root.jsx";
-import { checkAuthLoader, tokenLoader } from "./auth.js";
 import Error from "./error/Error.jsx";
 import PageNotFoundError from "./error/PageNotFoundError.jsx";
 import Home from "./home/Home.jsx";
@@ -18,6 +17,11 @@ import UserEdit, { action as editUserAction } from "./users/UserEdit.jsx";
 import Login, { action as loginAction } from "./auth/Login.jsx";
 import { action as logoutAction } from "./auth/Logout.jsx";
 import Profile from "./profile/Profile.jsx";
+import ChangePassword, {
+  action as changePasswordAction,
+} from "./profile/ChangePassword.jsx";
+
+import { checkAuthLoader, getAuthToken } from "./auth.js";
 import {
   getPosts as postsLoader,
   getPost as postLoader,
@@ -25,9 +29,6 @@ import {
   getUser as userLoader,
   getMe as meLoader,
 } from "./http.js";
-import ChangePassword, {
-  action as changePasswordAction,
-} from "./profile/ChangePassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,29 +36,21 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <PageNotFoundError />,
     id: "root",
-    loader: tokenLoader,
+    loader: getAuthToken,
     children: [
+      // Home
       {
-        path: "/",
+        index: true,
         element: <Home />,
       },
 
-      {
-        path: "/login",
-        element: <Login />,
-        action: loginAction,
-      },
-
-      {
-        path: "/logout",
-        action: logoutAction,
-      },
-
+      // Weather
       {
         path: "/weather",
         element: <Weather />,
       },
 
+      // Blog
       {
         path: "/blog",
         children: [
@@ -90,18 +83,21 @@ const router = createBrowserRouter([
         ],
       },
 
+      // Files
       {
         path: "/files",
         element: <Files />,
         loader: checkAuthLoader,
       },
 
+      // Gallery
       {
         path: "/gallery",
         element: <Gallery />,
         loader: checkAuthLoader,
       },
 
+      // Users
       {
         path: "/users",
         children: [
@@ -125,6 +121,8 @@ const router = createBrowserRouter([
           },
         ],
       },
+
+      // Profile
       {
         path: "/profile",
         children: [
@@ -141,6 +139,19 @@ const router = createBrowserRouter([
             errorElement: <Error message="Error during pushing data" />,
           },
         ],
+      },
+
+      // Auth
+      {
+        path: "/login",
+        element: <Login />,
+        action: loginAction,
+      },
+
+      // Auth
+      {
+        path: "/logout",
+        action: logoutAction,
       },
     ],
   },
