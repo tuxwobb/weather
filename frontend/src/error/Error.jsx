@@ -1,4 +1,3 @@
-import MainNavigation from "../navigation/MainNavigation";
 import { Link } from "react-router-dom";
 
 export default function Error({ message }) {

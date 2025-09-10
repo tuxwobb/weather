@@ -24,11 +24,27 @@ export default function Home() {
               Dynamics 365 Business Central
             </li>
             <li>
+              <Link to="/files">Soubory</Link> - Úložiště souborů
+            </li>
+            <li>
               <Link to="/gallery">Fotogalerii</Link> - pár fotek ze života
             </li>
+          </ul>
+
+          <h4>Externí odkazy</h4>
+
+          <ul>
             <li>
               <a href="https://bobkovo.cz">MS Business Central 365 API</a> -
               Aplikace pro napojení na webové služby MS Business Central
+            </li>
+            <li>
+              <a href="https://react.dev">React.dev</a> - Oficiační dokumentace
+              pro React
+            </li>
+            <li>
+              <a href="https://fastapi.tiangolo.com/">fastapi.tiangolo.com/</a>{" "}
+              - Oficiační dokumentace pro FastAPI
             </li>
           </ul>
 

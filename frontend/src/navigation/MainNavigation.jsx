@@ -55,15 +55,6 @@ export default function MainNavigation() {
                 Gallery
               </NavLink>
             )}
-            <a
-              className="nav-link"
-              aria-disabled="true"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://bobkovo.cz/"
-            >
-              BC API
-            </a>
             {token && (
               <NavLink to="/users" className="nav-link" aria-current="page" end>
                 Users

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import WeatherForm from "./WeatherForm";
 import WeatherItems from "./WeatherItems";
 import { getCities, deleteCity } from "../http.js";
-import { getAuthToken } from "../helpers.js";
+import { getAuthToken } from "../auth.js";
 
 export default function Weather() {
   const [cities, setCities] = useState([]);

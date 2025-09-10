@@ -1,7 +1,7 @@
 import { Link, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import { deletePost } from "../http";
 import parse from "html-react-parser";
-import { getAuthToken } from "../helpers";
+import { getAuthToken } from "../auth";
 
 export default function PostDetail() {
   const navigate = useNavigate();

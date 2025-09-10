@@ -4,7 +4,7 @@ import {
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
 } from "../http";
-import { getAuthToken } from "../helpers";
+import { getAuthToken } from "../auth";
 
 export default function WeatherItem({
   city,

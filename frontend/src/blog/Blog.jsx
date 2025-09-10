@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Posts from "./Posts";
-import { getAuthToken } from "../helpers";
+import { getAuthToken } from "../auth";
 
 export default function Blog() {
   const [filterText, setFilterText] = useState("");

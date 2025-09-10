@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root from "./Root.jsx";
-import { checkAuthLoader, tokenLoader } from "./helpers.js";
+import { checkAuthLoader, tokenLoader } from "./auth.js";
 import Error from "./error/Error.jsx";
 import PageNotFoundError from "./error/PageNotFoundError.jsx";
 import Home from "./home/Home.jsx";

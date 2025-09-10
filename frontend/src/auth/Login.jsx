@@ -31,5 +31,9 @@ export async function action({ request }) {
   }
 
   localStorage.setItem("token", resData.access_token);
+  const expiration = new Date();
+  expiration.setMinutes(expiration.getMinutes() + 30);
+  localStorage.setItem("expiration", expiration.toISOString());
+
   return redirect("/");
 }

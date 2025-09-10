@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { getAuthToken } from "./helpers";
+import { getAuthToken } from "./auth.js";
 
 export const OPEN_WEATHER_API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 export const OPEN_WEATHER_API_URL =
