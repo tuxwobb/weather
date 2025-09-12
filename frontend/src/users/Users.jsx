@@ -64,6 +64,7 @@ export default function Users() {
                 <table className="table">
                   <thead>
                     <tr>
+                      <th scope="col">Id</th>
                       <th scope="col">Fullname</th>
                       <th scope="col">Username</th>
                       <th scope="col">Email</th>

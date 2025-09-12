@@ -10,6 +10,7 @@ export default function User({
   return (
     <>
       <tr>
+        <td>{user.id}</td>
         <td>{user.fullname}</td>
         <td>{user.username}</td>
         <td>{user.email}</td>
