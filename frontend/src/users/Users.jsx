@@ -1,24 +1,15 @@
 import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import User from "./User";
 import SearchForm from "./components/SearchForm";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { activateUser, adminUser, deleteUser } from "../http";
-import { checkAdmin } from "../auth";
+import { useAuth } from "../AuthProvider";
 
 export default function Users() {
   const users = useLoaderData();
   const revalidator = useRevalidator();
   const [filteredUsers, setFilteredUsers] = useState(users);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // check if user is admin
-  useEffect(() => {
-    async function isAdmin() {
-      const admin = await checkAdmin();
-      setIsAdmin(admin);
-    }
-    isAdmin();
-  }, []);
+  const { user } = useAuth();
 
   async function handleDeleteUser(id) {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
@@ -58,7 +49,7 @@ export default function Users() {
               </div>
             </div>
 
-            {isAdmin && (
+            {user.isAdmin && (
               <div className="row mb-2">
                 <div className="col">
                   <Link className="btn btn-sm btn-secondary" to="/users/new">
@@ -82,14 +73,14 @@ export default function Users() {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredUsers.map((user) => (
+                    {filteredUsers.map((usr) => (
                       <User
                         handleDeleteUser={handleDeleteUser}
                         handleActivateUser={handleActivateUser}
                         handleAdminUser={handleAdminUser}
-                        user={user}
-                        key={user.id}
-                        isAdmin={isAdmin}
+                        user={usr}
+                        key={usr.id}
+                        isAdmin={user.isAdmin}
                       />
                     ))}
                   </tbody>

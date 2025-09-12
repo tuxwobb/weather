@@ -1,14 +1,19 @@
 import { useLoaderData, redirect } from "react-router-dom";
 import PostForm from "./components/PostForm.jsx";
 import { editPost } from "../http.js";
+import Error from "../error/Error.jsx";
+import { useAuth } from "../AuthProvider.jsx";
 
-function PostEdit() {
+export default function PostEdit() {
   const post = useLoaderData();
+  const { user } = useAuth();
+
+  if (!user.isAdmin) {
+    return <Error message="You are not an admin" />;
+  }
 
   return <PostForm post={post} />;
 }
-
-export default PostEdit;
 
 export async function action({ request }) {
   const formData = await request.formData();

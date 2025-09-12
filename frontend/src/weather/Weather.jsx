@@ -2,22 +2,13 @@ import { useState, useEffect } from "react";
 import WeatherForm from "./WeatherForm";
 import WeatherItems from "./WeatherItems";
 import { getCities, deleteCity } from "../http.js";
-import { checkAdmin } from "../auth.js";
+import { useAuth } from "../AuthProvider.jsx";
 
 export default function Weather() {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // check if user is admin
-  useEffect(() => {
-    async function isAdmin() {
-      const admin = await checkAdmin();
-      setIsAdmin(admin);
-    }
-    isAdmin();
-  }, []);
+  const { user } = useAuth();
 
   // initial fetch of cities from custom API
   useEffect(() => {
@@ -65,7 +56,7 @@ export default function Weather() {
         </div>
       </div>
 
-      {isAdmin && <WeatherForm setCities={setCities} />}
+      {user.isAdmin && <WeatherForm setCities={setCities} />}
 
       {isLoading && (
         <div className="container">

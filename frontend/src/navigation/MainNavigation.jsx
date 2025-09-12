@@ -1,7 +1,14 @@
-import { NavLink, Form, useLoaderData } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthProvider";
 
 export default function MainNavigation() {
-  const token = useLoaderData("root");
+  const { token, logout } = useAuth();
+  const nav = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    return nav("/login");
+  }
 
   return (
     <nav
@@ -76,11 +83,9 @@ export default function MainNavigation() {
               </NavLink>
             )}
             {token && (
-              <Form method="post" action="/logout">
-                <button className="nav-link" type="submit">
-                  Logout
-                </button>
-              </Form>
+              <button className="nav-link" onClick={handleLogout}>
+                Logout
+              </button>
             )}
           </div>
         </div>

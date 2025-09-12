@@ -1,22 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Posts from "./Posts";
-import { checkAdmin } from "../auth";
+import { useAuth } from "../AuthProvider";
 
 export default function Blog() {
   const [filterText, setFilterText] = useState("");
   const blogPosts = useLoaderData();
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // check if user is admin
-  useEffect(() => {
-    async function isAdmin() {
-      const admin = await checkAdmin();
-      setIsAdmin(admin);
-    }
-    isAdmin();
-  }, []);
+  const { user } = useAuth();
 
   return (
     <div className="container mt-3">
@@ -32,7 +23,7 @@ export default function Blog() {
         </div>
       </div>
 
-      {isAdmin && (
+      {user.isAdmin && (
         <div className="row">
           <div className="col-3">
             <Link className="btn btn-sm btn-secondary" to="/blog/new">

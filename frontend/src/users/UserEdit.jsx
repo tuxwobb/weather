@@ -1,11 +1,22 @@
 import UserForm from "./components/UserForm";
 import { useLoaderData, redirect } from "react-router-dom";
 import { editUser } from "../http";
+import Error from "../error/Error.jsx";
+import { useAuth } from "../AuthProvider.jsx";
 
 export default function UserEdit() {
-  const user = useLoaderData();
+  const usr = useLoaderData();
+  const { user } = useAuth();
 
-  return <UserForm user={user} />;
+  if (user.isAdmin) {
+    return <UserForm user={usr} />;
+  }
+
+  if (user.id === usr.id) {
+    return <UserForm user={usr} />;
+  }
+
+  return <Error message="You are not an admin" />;
 }
 
 export async function action({ request }) {

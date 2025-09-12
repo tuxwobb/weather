@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import Root from "./Root.jsx";
 import Error from "./error/Error.jsx";
 import PageNotFoundError from "./error/PageNotFoundError.jsx";
@@ -14,14 +13,12 @@ import Gallery from "./gallery/Gallery.jsx";
 import Users from "./users/Users.jsx";
 import UserNew, { action as newUserAction } from "./users/UserNew.jsx";
 import UserEdit, { action as editUserAction } from "./users/UserEdit.jsx";
-import Login, { action as loginAction } from "./auth/Login.jsx";
-import { action as logoutAction } from "./auth/Logout.jsx";
 import Profile from "./profile/Profile.jsx";
 import ChangePassword, {
   action as changePasswordAction,
 } from "./profile/ChangePassword.jsx";
-
-import { checkAdminLoader, getAuthToken } from "./auth.js";
+import NewLogin from "./auth/NewLogin.jsx";
+import { getAuthToken } from "./auth.js";
 import {
   getPosts as postsLoader,
   getPost as postLoader,
@@ -29,6 +26,7 @@ import {
   getUser as userLoader,
   getMe as meLoader,
 } from "./http.js";
+import { AuthProvider } from "./AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +75,6 @@ const router = createBrowserRouter([
             path: "/blog/new",
             element: <PostNew />,
             action: newPostAction,
-            loader: checkAdminLoader,
             errorElement: <Error message="Error during pushing data" />,
           },
         ],
@@ -87,14 +84,12 @@ const router = createBrowserRouter([
       {
         path: "/files",
         element: <Files />,
-        loader: checkAdminLoader,
       },
 
       // Gallery
       {
         path: "/gallery",
         element: <Gallery />,
-        loader: checkAdminLoader,
       },
 
       // Users
@@ -108,17 +103,16 @@ const router = createBrowserRouter([
             errorElement: <Error message="Error during fetching data" />,
           },
           {
-            path: "/users/new",
-            element: <UserNew />,
-            action: newUserAction,
-            loader: checkAdminLoader,
-          },
-          {
             path: "/users/:userId/edit",
             element: <UserEdit />,
             action: editUserAction,
             loader: ({ params }) => userLoader(params.userId),
             errorElement: <Error message="Error during pushing data" />,
+          },
+          {
+            path: "/users/new",
+            element: <UserNew />,
+            action: newUserAction,
           },
         ],
       },
@@ -145,19 +139,16 @@ const router = createBrowserRouter([
       // Auth
       {
         path: "/login",
-        element: <Login />,
-        action: loginAction,
-      },
-
-      // Auth
-      {
-        path: "/logout",
-        action: logoutAction,
+        element: <NewLogin />,
       },
     ],
   },
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 }

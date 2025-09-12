@@ -1,8 +1,16 @@
 import UserForm from "./components/UserForm";
+import Error from "../error/Error";
 import { createUser } from "../http";
 import { redirect } from "react-router-dom";
+import { useAuth } from "../AuthProvider";
 
 export default function UserNew() {
+  const { user } = useAuth();
+
+  if (!user.isAdmin) {
+    return <Error message="You are not an admin" />;
+  }
+
   return <UserForm />;
 }
 
