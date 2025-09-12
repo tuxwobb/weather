@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import {
   fetchWeather,
-  addCity,
+  createCity,
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
 } from "../http";
@@ -39,7 +39,7 @@ export default function WeatherForm({ setCities }) {
     try {
       setIsError(null);
       setIsLoading(true);
-      const response = await addCity(cityRef.current.value);
+      const response = await createCity(cityRef.current.value);
       setCities((prevCities) => [
         ...prevCities,
         { name: cityRef.current.value, id: response.id },

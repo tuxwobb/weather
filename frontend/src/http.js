@@ -58,7 +58,7 @@ export async function getCities() {
   return resData;
 }
 
-export async function addCity(city_name) {
+export async function createCity(city_name) {
   if (!getAuthToken()) return redirect("/login");
 
   const response = await fetch(`${CUSTOM_API_URL}/cities/`, {
