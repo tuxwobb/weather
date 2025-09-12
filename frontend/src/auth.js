@@ -24,10 +24,44 @@ export function getAuthToken() {
   return token;
 }
 
-export function checkAuthLoader() {
-  const token = getAuthToken();
+export async function checkAdminLoader() {
+  const admin = await checkAdmin();
+  if (!admin) {
+    return redirect("/login");
+  }
+}
 
+export async function checkActiveLoader() {
+  const active = await checkActive();
+  if (!active) {
+    return redirect("/login");
+  }
+}
+
+export async function checkAdmin() {
+  const token = getAuthToken();
   if (!token) {
     return redirect("/login");
+  }
+
+  const me = await getMe();
+  if (me.admin) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function checkActive() {
+  const token = getAuthToken();
+  if (!token) {
+    return redirect("/login");
+  }
+
+  const me = await getMe();
+  if (me.active) {
+    return true;
+  } else {
+    return false;
   }
 }

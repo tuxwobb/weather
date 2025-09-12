@@ -1,12 +1,21 @@
 import { Link, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import { deletePost } from "../http";
 import parse from "html-react-parser";
-import { getAuthToken } from "../auth";
+import { useState, useEffect } from "react";
+import { checkAdmin } from "../auth";
 
 export default function PostDetail() {
   const navigate = useNavigate();
   const post = useLoaderData();
-  const isLoggedIn = getAuthToken() ? true : false;
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    async function isAdmin() {
+      const admin = await checkAdmin();
+      setIsAdmin(admin);
+    }
+    isAdmin();
+  }, []);
 
   async function handleDeletePost(post_id) {
     if (confirm("Are you sure to delete post?")) {
@@ -33,7 +42,7 @@ export default function PostDetail() {
             <Link className="btn btn-sm btn-light" to="/blog">
               Back
             </Link>{" "}
-            {isLoggedIn && (
+            {isAdmin && (
               <>
                 <Link
                   className="btn btn-sm btn-secondary"

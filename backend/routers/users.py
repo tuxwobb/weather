@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 import schemas
 import crud
-from dependencies import get_current_admin_user
+from dependencies import get_current_admin_user, get_current_user
 
 router = APIRouter()
 
@@ -10,7 +10,7 @@ router = APIRouter()
 @router.get(
     "/",
     response_model=list[schemas.User],
-    dependencies=[Depends(get_current_admin_user)],
+    dependencies=[Depends(get_current_user)],
 )
 async def read_users(skip: int = 0, limit: int = 10):
     """Get all users"""
@@ -20,7 +20,7 @@ async def read_users(skip: int = 0, limit: int = 10):
 @router.get(
     "/{user_id}",
     response_model=schemas.User,
-    dependencies=[Depends(get_current_admin_user)],
+    dependencies=[Depends(get_current_user)],
 )
 async def read_user(user_id: int):
     """Get user by id"""

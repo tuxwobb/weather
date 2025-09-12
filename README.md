@@ -5,11 +5,12 @@ This is very simple React application using OpenWeatherMap and Python FastAPI. T
 
 ## Features
 
-- weather - connected to OpenWeatherMap
+- weather - connected to OpenWeatherMap API
 - blog - using SQLite database
 - files (TBD)
 - gallery (TBD)
 - users - managing users
+- profile - managing user profile with possibility to change password
 - authentification - login, logout, change password
 
 ## Installation
@@ -50,6 +51,6 @@ to be able fetch data from OpenWeatherMap portal.
 
 ## External links
 
-https://react.dev/
-https://fastapi.tiangolo.com/
-https://openweathermap.org/
+- https://react.dev/
+- https://fastapi.tiangolo.com/
+- https://openweathermap.org/

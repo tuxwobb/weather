@@ -1,13 +1,24 @@
 import { useLoaderData, Link, useRevalidator } from "react-router-dom";
 import User from "./User";
 import SearchForm from "./components/SearchForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { activateUser, adminUser, deleteUser } from "../http";
+import { checkAdmin } from "../auth";
 
 export default function Users() {
   const users = useLoaderData();
   const revalidator = useRevalidator();
   const [filteredUsers, setFilteredUsers] = useState(users);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // check if user is admin
+  useEffect(() => {
+    async function isAdmin() {
+      const admin = await checkAdmin();
+      setIsAdmin(admin);
+    }
+    isAdmin();
+  }, []);
 
   async function handleDeleteUser(id) {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
@@ -47,13 +58,15 @@ export default function Users() {
               </div>
             </div>
 
-            <div className="row mb-2">
-              <div className="col">
-                <Link className="btn btn-sm btn-secondary" to="/users/new">
-                  New user
-                </Link>
+            {isAdmin && (
+              <div className="row mb-2">
+                <div className="col">
+                  <Link className="btn btn-sm btn-secondary" to="/users/new">
+                    New user
+                  </Link>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="row mb-2">
               <div className="col">
@@ -76,6 +89,7 @@ export default function Users() {
                         handleAdminUser={handleAdminUser}
                         user={user}
                         key={user.id}
+                        isAdmin={isAdmin}
                       />
                     ))}
                   </tbody>

@@ -5,6 +5,7 @@ export default function User({
   handleDeleteUser,
   handleActivateUser,
   handleAdminUser,
+  isAdmin,
 }) {
   return (
     <>
@@ -15,45 +16,48 @@ export default function User({
         <td>{user.active ? "Yes" : "No"}</td>
         <td>{user.admin ? "Yes" : "No"}</td>
         <td>
-          <Link
-            to={`/users/${user.id}/edit`}
-            type="button"
-            className="btn btn-sm btn-secondary"
-          >
-            Edit
-          </Link>{" "}
-          {user.id !== 1 && (
-            <button
-              type="button"
-              className="btn btn-sm btn-danger"
-              onClick={() => {
-                handleDeleteUser(user.id);
-              }}
-            >
-              Delete
-            </button>
-          )}{" "}
-          {!user.active && (
-            <button
-              type="button"
-              className="btn btn-sm btn-success"
-              onClick={() => {
-                handleActivateUser(user.id);
-              }}
-            >
-              Activate
-            </button>
-          )}{" "}
-          {!user.admin && (
-            <button
-              type="button"
-              className="btn btn-sm btn-primary"
-              onClick={() => {
-                handleAdminUser(user.id);
-              }}
-            >
-              Admin
-            </button>
+          {!isAdmin && <>admin only</>}
+          {isAdmin && user.id !== 1 && (
+            <>
+              <Link
+                to={`/users/${user.id}/edit`}
+                type="button"
+                className="btn btn-sm btn-secondary"
+              >
+                Edit
+              </Link>{" "}
+              <button
+                type="button"
+                className="btn btn-sm btn-danger"
+                onClick={() => {
+                  handleDeleteUser(user.id);
+                }}
+              >
+                Delete
+              </button>{" "}
+              {!user.active && (
+                <button
+                  type="button"
+                  className="btn btn-sm btn-success"
+                  onClick={() => {
+                    handleActivateUser(user.id);
+                  }}
+                >
+                  Activate
+                </button>
+              )}{" "}
+              {!user.admin && (
+                <button
+                  type="button"
+                  className="btn btn-sm btn-primary"
+                  onClick={() => {
+                    handleAdminUser(user.id);
+                  }}
+                >
+                  Admin
+                </button>
+              )}{" "}
+            </>
           )}
         </td>
       </tr>

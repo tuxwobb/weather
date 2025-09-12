@@ -21,7 +21,7 @@ import ChangePassword, {
   action as changePasswordAction,
 } from "./profile/ChangePassword.jsx";
 
-import { checkAuthLoader, getAuthToken } from "./auth.js";
+import { checkAdminLoader, getAuthToken } from "./auth.js";
 import {
   getPosts as postsLoader,
   getPost as postLoader,
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
             path: "/blog/new",
             element: <PostNew />,
             action: newPostAction,
-            loader: checkAuthLoader,
+            loader: checkAdminLoader,
             errorElement: <Error message="Error during pushing data" />,
           },
         ],
@@ -87,14 +87,14 @@ const router = createBrowserRouter([
       {
         path: "/files",
         element: <Files />,
-        loader: checkAuthLoader,
+        loader: checkAdminLoader,
       },
 
       // Gallery
       {
         path: "/gallery",
         element: <Gallery />,
-        loader: checkAuthLoader,
+        loader: checkAdminLoader,
       },
 
       // Users
@@ -111,6 +111,7 @@ const router = createBrowserRouter([
             path: "/users/new",
             element: <UserNew />,
             action: newUserAction,
+            loader: checkAdminLoader,
           },
           {
             path: "/users/:userId/edit",

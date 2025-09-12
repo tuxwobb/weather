@@ -4,7 +4,7 @@ import {
   OPEN_WEATHER_API_KEY,
   OPEN_WEATHER_API_URL,
 } from "../http";
-import { getAuthToken } from "../auth";
+import { checkAdmin } from "../auth";
 
 export default function WeatherItem({
   city,
@@ -14,7 +14,16 @@ export default function WeatherItem({
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiData, setApiData] = useState(null);
-  const isLoggedIn = getAuthToken() ? true : false;
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // check if user is admin
+  useEffect(() => {
+    async function isAdmin() {
+      const admin = await checkAdmin();
+      setIsAdmin(admin);
+    }
+    isAdmin();
+  }, []);
 
   useEffect(() => {
     async function fetchWeatherData() {
@@ -99,7 +108,7 @@ export default function WeatherItem({
             >
               Detail
             </button>{" "}
-            {isLoggedIn && (
+            {isAdmin && (
               <button
                 className="btn btn-sm btn-secondary mt-2"
                 onClick={() => handleDelete(city.id)}
