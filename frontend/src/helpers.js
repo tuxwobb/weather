@@ -23,3 +23,10 @@ export function toIsoString(date) {
     pad(Math.abs(tzo) % 60)
   );
 }
+
+export function checkRole(user, role) {
+  if (user && user.roles.some((e) => e.name === role)) {
+    return true;
+  }
+  return false;
+}

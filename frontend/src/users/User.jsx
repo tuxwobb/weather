@@ -1,65 +1,53 @@
 import { Link } from "react-router-dom";
+import { checkRole } from "../helpers";
+import { useAuth } from "../AuthProvider";
+import Error from "../error/Error";
 
-export default function User({
-  user,
-  handleDeleteUser,
-  handleActivateUser,
-  handleAdminUser,
-  isAdmin,
-}) {
+export default function User({ usr, handleDeleteUser, handleActivateUser }) {
+  const { user } = useAuth();
+
+  if (!checkRole(user, "admin")) {
+    return <Error message="You do not have permissions to see the content." />;
+  }
+
   return (
     <>
       <tr>
-        <td>{user.id}</td>
-        <td>{user.fullname}</td>
-        <td>{user.username}</td>
-        <td>{user.email}</td>
-        <td>{user.active ? "Yes" : "No"}</td>
-        <td>{user.admin ? "Yes" : "No"}</td>
+        <td>{usr.id}</td>
+        <td>{usr.fullname}</td>
+        <td>{usr.username}</td>
+        <td>{usr.email}</td>
+        <td>{usr.active ? "Yes" : "No"}</td>
         <td>
-          {!isAdmin && <>admin only</>}
-          {isAdmin && user.id !== 1 && (
-            <>
-              <Link
-                to={`/users/${user.id}/edit`}
-                type="button"
-                className="btn btn-sm btn-secondary"
-              >
-                Edit
-              </Link>{" "}
+          <>
+            <Link
+              to={`/users/${usr.id}/edit`}
+              type="button"
+              className="btn btn-sm btn-secondary"
+            >
+              Edit
+            </Link>{" "}
+            <button
+              type="button"
+              className="btn btn-sm btn-danger"
+              onClick={() => {
+                handleDeleteUser(usr.id);
+              }}
+            >
+              Delete
+            </button>{" "}
+            {!usr.active && (
               <button
                 type="button"
-                className="btn btn-sm btn-danger"
+                className="btn btn-sm btn-success"
                 onClick={() => {
-                  handleDeleteUser(user.id);
+                  handleActivateUser(usr.id);
                 }}
               >
-                Delete
-              </button>{" "}
-              {!user.active && (
-                <button
-                  type="button"
-                  className="btn btn-sm btn-success"
-                  onClick={() => {
-                    handleActivateUser(user.id);
-                  }}
-                >
-                  Activate
-                </button>
-              )}{" "}
-              {!user.admin && (
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary"
-                  onClick={() => {
-                    handleAdminUser(user.id);
-                  }}
-                >
-                  Admin
-                </button>
-              )}{" "}
-            </>
-          )}
+                Activate
+              </button>
+            )}{" "}
+          </>
         </td>
       </tr>
     </>

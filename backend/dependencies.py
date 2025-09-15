@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 
 from database import SessionLocal
 from models import User
-from schemas import TokenData
+from schemas import TokenData, UserBase
 
 # to get a string like this run: openssl rand -hex 32
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
@@ -38,7 +38,7 @@ def get_user(
 ):
     db = SessionLocal()
     user = db.query(User).filter(User.username == username).first()
-    db.close()
+    # db.close()
     return user
 
 
@@ -110,5 +110,19 @@ def change_user_password(user_id: int, password: str):
     db_user.password = hashed_password
     db.commit()
     db.refresh(db_user)
-    db.close()
+    # db.close()
+    return db_user
+
+
+def change_user_profile(user: UserBase, current_user: User):
+    db = SessionLocal()
+    db_user = db.get(User, current_user.id)
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    db_user.fullname = user.fullname
+    db_user.username = user.username
+    db_user.email = user.email
+    db.commit()
+    db.refresh(db_user)
+    # db.close()
     return db_user

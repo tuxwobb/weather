@@ -38,6 +38,11 @@ class PostCreate(PostBase):
     pass
 
 
+class RoleBase(BaseModel):
+    id: int
+    name: str
+
+
 class UserBase(BaseModel):
     fullname: str
     username: str
@@ -48,6 +53,7 @@ class User(UserBase):
     id: int
     active: bool
     admin: bool
+    roles: list[RoleBase] = []
 
 
 class UserCreate(UserBase):

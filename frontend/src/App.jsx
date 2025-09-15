@@ -17,6 +17,9 @@ import Profile from "./profile/Profile.jsx";
 import ChangePassword, {
   action as changePasswordAction,
 } from "./profile/ChangePassword.jsx";
+import EditProfile, {
+  action as editProfileAction,
+} from "./profile/EditProfile.jsx";
 import NewLogin from "./auth/NewLogin.jsx";
 import { getAuthToken } from "./auth.js";
 import {
@@ -131,6 +134,13 @@ const router = createBrowserRouter([
             path: "/profile/change_password",
             element: <ChangePassword />,
             action: changePasswordAction,
+            errorElement: <Error message="Error during pushing data" />,
+          },
+          {
+            path: "/profile/edit",
+            element: <EditProfile />,
+            loader: meLoader,
+            action: editProfileAction,
             errorElement: <Error message="Error during pushing data" />,
           },
         ],

@@ -3,6 +3,7 @@ import { useLoaderData, Link } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Posts from "./Posts";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function Blog() {
   const [filterText, setFilterText] = useState("");
@@ -23,7 +24,7 @@ export default function Blog() {
         </div>
       </div>
 
-      {user.isAdmin && (
+      {checkRole(user, "blog_edit") && (
         <div className="row">
           <div className="col-3">
             <Link className="btn btn-sm btn-secondary" to="/blog/new">

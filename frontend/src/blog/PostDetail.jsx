@@ -2,6 +2,7 @@ import { Link, useLoaderData, redirect, useNavigate } from "react-router-dom";
 import { deletePost } from "../http";
 import parse from "html-react-parser";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function PostDetail() {
             <Link className="btn btn-sm btn-light" to="/blog">
               Back
             </Link>{" "}
-            {user.isAdmin && (
+            {checkRole(user, "blog_edit") && (
               <>
                 <Link
                   className="btn btn-sm btn-secondary"

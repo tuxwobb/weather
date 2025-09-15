@@ -1,15 +1,22 @@
 import { useLoaderData, Link, useRevalidator } from "react-router-dom";
+import { useState } from "react";
 import User from "./User";
 import SearchForm from "./components/SearchForm";
-import { useState } from "react";
-import { activateUser, adminUser, deleteUser } from "../http";
+import Error from "../error/Error";
+import { activateUser, deleteUser } from "../http";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function Users() {
+  const { user } = useAuth();
   const users = useLoaderData();
   const revalidator = useRevalidator();
   const [filteredUsers, setFilteredUsers] = useState(users);
-  const { user } = useAuth();
+
+  // check admin role
+  if (!checkRole(user, "admin")) {
+    return <Error message="You do not have permissions to see the content." />;
+  }
 
   async function handleDeleteUser(id) {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
@@ -21,15 +28,6 @@ export default function Users() {
   async function handleActivateUser(id) {
     if (!window.confirm("Are you sure you want to activate this user?")) return;
     await activateUser(id);
-    await revalidator.revalidate();
-    const newUsers = users;
-    setFilteredUsers(newUsers);
-  }
-
-  async function handleAdminUser(id) {
-    if (!window.confirm("Are you sure you want to make this user admin?"))
-      return;
-    await adminUser(id);
     await revalidator.revalidate();
     const newUsers = users;
     setFilteredUsers(newUsers);
@@ -49,15 +47,13 @@ export default function Users() {
               </div>
             </div>
 
-            {user.isAdmin && (
-              <div className="row mb-2">
-                <div className="col">
-                  <Link className="btn btn-sm btn-secondary" to="/users/new">
-                    New user
-                  </Link>
-                </div>
+            <div className="row mb-2">
+              <div className="col">
+                <Link className="btn btn-sm btn-secondary" to="/users/new">
+                  New user
+                </Link>
               </div>
-            )}
+            </div>
 
             <div className="row mb-2">
               <div className="col">
@@ -69,7 +65,6 @@ export default function Users() {
                       <th scope="col">Username</th>
                       <th scope="col">Email</th>
                       <th scope="col">Active</th>
-                      <th scope="col">Admin</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>
@@ -78,10 +73,8 @@ export default function Users() {
                       <User
                         handleDeleteUser={handleDeleteUser}
                         handleActivateUser={handleActivateUser}
-                        handleAdminUser={handleAdminUser}
-                        user={usr}
+                        usr={usr}
                         key={usr.id}
-                        isAdmin={user.isAdmin}
                       />
                     ))}
                   </tbody>

@@ -68,7 +68,7 @@ export default function WeatherForm({ setCities }) {
               className="btn btn-sm btn-secondary mb-1"
               onClick={handleAddCity}
             >
-              Add
+              New city
             </button>
           </p>
           {isError && (

@@ -3,13 +3,14 @@ import PostForm from "./components/PostForm.jsx";
 import { editPost } from "../http.js";
 import Error from "../error/Error.jsx";
 import { useAuth } from "../AuthProvider.jsx";
+import { checkRole } from "../helpers.js";
 
 export default function PostEdit() {
   const post = useLoaderData();
   const { user } = useAuth();
 
-  if (!user.isAdmin) {
-    return <Error message="You are not an admin" />;
+  if (!checkRole(user, "blog_edit")) {
+    return <Error message="You do not have permissions to see the content." />;
   }
 
   return <PostForm post={post} />;

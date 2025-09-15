@@ -12,7 +12,7 @@ export default function Post({ post }) {
       />
       <p>
         <Link className="btn btn-sm btn-light" to={`/blog/${post.id}`}>
-          Přečíst
+          Read
         </Link>
         <span className="float-end">
           <em>

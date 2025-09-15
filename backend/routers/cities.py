@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends
 import schemas
 import crud
 from dependencies import get_current_active_user
+from database import SessionDep
 
 router = APIRouter()
 
@@ -13,30 +14,42 @@ async def common_parameters(name: str | None = None, skip: int = 0, limit: int =
 
 
 @router.get("/", response_model=list[schemas.City])
-async def read_cities(commons: Annotated[dict, Depends(common_parameters)]):
+async def read_cities(
+    commons: Annotated[dict, Depends(common_parameters)],
+    session: SessionDep = None,
+):
     """Get all cities"""
-    cities = crud.get_cities(commons)
+    cities = crud.get_cities(commons, session=session)
     return cities
 
 
 @router.get("/{city_id}", response_model=schemas.City)
-async def read_city(city_id: int):
+async def read_city(
+    city_id: int,
+    session: SessionDep = None,
+):
     """Get city by id"""
-    return crud.get_city(city_id=city_id)
+    return crud.get_city(city_id=city_id, session=session)
 
 
 @router.post(
     "/", response_model=schemas.City, dependencies=[Depends(get_current_active_user)]
 )
-async def create_city(city: schemas.CityCreate):
+async def create_city(
+    city: schemas.CityCreate,
+    session: SessionDep = None,
+):
     """Create city"""
-    return crud.create_city(city=city)
+    return crud.create_city(city=city, session=session)
 
 
 @router.delete("/{city_id}", dependencies=[Depends(get_current_active_user)])
-async def delete_city(city_id: int):
+async def delete_city(
+    city_id: int,
+    session: SessionDep = None,
+):
     """Delete city"""
-    return crud.delete_city(city_id=city_id)
+    return crud.delete_city(city_id=city_id, session=session)
 
 
 @router.patch(
@@ -44,6 +57,10 @@ async def delete_city(city_id: int):
     response_model=schemas.City,
     dependencies=[Depends(get_current_active_user)],
 )
-async def update_city(city_id: int, city: schemas.CityCreate):
+async def update_city(
+    city_id: int,
+    city: schemas.CityCreate,
+    session: SessionDep = None,
+):
     """Update city"""
-    return crud.update_city(city_id=city_id, city=city)
+    return crud.update_city(city_id=city_id, city=city, session=session)

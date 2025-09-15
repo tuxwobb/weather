@@ -5,6 +5,7 @@ import {
   OPEN_WEATHER_API_URL,
 } from "../http";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function WeatherItem({
   city,
@@ -99,7 +100,7 @@ export default function WeatherItem({
             >
               Detail
             </button>{" "}
-            {user.isAdmin && (
+            {checkRole(user, "weather_edit") && (
               <button
                 className="btn btn-sm btn-secondary mt-2"
                 onClick={() => handleDelete(city.id)}

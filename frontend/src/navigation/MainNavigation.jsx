@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function MainNavigation() {
   const { user, token, logout } = useAuth();
@@ -35,13 +36,16 @@ export default function MainNavigation() {
             <NavLink to="/" className="nav-link" aria-current="page" end>
               Home
             </NavLink>
+
             <NavLink to="/weather" className="nav-link" aria-current="page" end>
               Weather
             </NavLink>
+
             <NavLink to="/blog" className="nav-link" aria-current="page" end>
               Blog
             </NavLink>
-            {user.isActive && (
+
+            {checkRole(user, "files") && (
               <NavLink
                 to="/files"
                 className="nav-link disabled"
@@ -51,7 +55,8 @@ export default function MainNavigation() {
                 Files
               </NavLink>
             )}
-            {user.isActive && (
+
+            {checkRole(user, "gallery") && (
               <NavLink
                 to="/gallery"
                 className="nav-link disabled"
@@ -62,16 +67,19 @@ export default function MainNavigation() {
                 Gallery
               </NavLink>
             )}
-            {user.isAdmin && (
+
+            {checkRole(user, "admin") && (
               <NavLink to="/users" className="nav-link" aria-current="page" end>
                 Users
               </NavLink>
             )}
+
             {!token && (
               <NavLink to="/login" className="nav-link" aria-current="page" end>
                 Login
               </NavLink>
             )}
+
             {token && (
               <NavLink
                 to="/profile"
@@ -82,6 +90,7 @@ export default function MainNavigation() {
                 Profile
               </NavLink>
             )}
+
             {token && (
               <button className="nav-link" onClick={handleLogout}>
                 Logout

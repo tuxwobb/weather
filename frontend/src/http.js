@@ -108,7 +108,6 @@ export async function getPosts() {
   return resData;
 }
 
-// in loader
 export async function getPost(post_id) {
   const response = await fetch(`${CUSTOM_API_URL}/posts/${post_id}`);
   const resData = await response.json();
@@ -302,28 +301,6 @@ export async function activateUser(user_id) {
   return resData;
 }
 
-export async function adminUser(user_id) {
-  if (!getAuthToken()) return redirect("/login");
-
-  const response = await fetch(
-    `${CUSTOM_API_URL}/users/admin_user/${user_id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getAuthToken()}`,
-      },
-    }
-  );
-  const resData = await response.json();
-
-  if (!response.ok) {
-    throw new Error(resData.message || "error occured");
-  }
-
-  return resData;
-}
-
 export async function getMe() {
   if (!getAuthToken()) return redirect("/login");
 
@@ -356,6 +333,27 @@ export async function changePassword(newPassword) {
       },
     }
   );
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function editProfile(user) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`${CUSTOM_API_URL}/auth/edit_profile`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: JSON.stringify(user),
+  });
+
   const resData = await response.json();
 
   if (!response.ok) {

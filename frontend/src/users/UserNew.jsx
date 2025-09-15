@@ -3,12 +3,13 @@ import Error from "../error/Error";
 import { createUser } from "../http";
 import { redirect } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
 
 export default function UserNew() {
   const { user } = useAuth();
 
-  if (!user.isAdmin) {
-    return <Error message="You are not an admin" />;
+  if (!checkRole(user, "admin")) {
+    return <Error message="You do not have permissions to see the content." />;
   }
 
   return <UserForm />;

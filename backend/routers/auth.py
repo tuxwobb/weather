@@ -7,8 +7,9 @@ from dependencies import (
     create_access_token,
     get_current_user,
     change_user_password,
+    change_user_profile,
 )
-from schemas import Token, User
+from schemas import Token, User, UserBase
 
 router = APIRouter()
 
@@ -50,4 +51,13 @@ async def change_password(
     new_password: str, current_user: Annotated[User, Depends(get_current_user)]
 ):
     change_user_password(user_id=current_user.id, password=new_password)
+    return {"message": "Password changed successfully."}
+
+
+@router.post("/edit_profile")
+async def edit_profile(
+    user: UserBase,
+    current_user: Annotated[User, Depends(get_current_user)],
+):
+    change_user_profile(user, current_user=current_user)
     return {"message": "Password changed successfully."}

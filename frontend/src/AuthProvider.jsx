@@ -5,9 +5,12 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
-    isAuthenticated: false,
+    id: null,
+    fullname: null,
+    username: null,
+    email: null,
     isActive: false,
-    isAdmin: false,
+    roles: [],
   });
   const [token, setToken] = useState(localStorage.getItem("token"));
 
@@ -16,13 +19,12 @@ export const AuthProvider = ({ children }) => {
       async function getUser() {
         const loggedUser = await getMe();
         setUser({
-          isAuthenticated: true,
           id: loggedUser.id,
           fullname: loggedUser.fullname,
           username: loggedUser.username,
           email: loggedUser.email,
           isActive: loggedUser.active,
-          isAdmin: loggedUser.admin,
+          roles: loggedUser.roles,
         });
       }
       getUser();
@@ -31,15 +33,25 @@ export const AuthProvider = ({ children }) => {
 
   const login = (user, token) => {
     setUser({
-      isAuthenticated: true,
+      id: user.id,
+      fullname: user.fullname,
+      username: user.username,
+      email: user.email,
       isActive: user.active,
-      isAdmin: user.admin,
+      roles: user.roles,
     });
     setToken(token);
   };
 
   const logout = () => {
-    setUser({ isAuthenticated: false, isActive: false, isAdmin: false });
+    setUser({
+      id: null,
+      fullname: null,
+      username: null,
+      email: null,
+      isActive: false,
+      roles: [],
+    });
     setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");

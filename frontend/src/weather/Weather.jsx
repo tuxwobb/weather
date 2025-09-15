@@ -3,6 +3,7 @@ import WeatherForm from "./WeatherForm";
 import WeatherItems from "./WeatherItems";
 import { getCities, deleteCity } from "../http.js";
 import { useAuth } from "../AuthProvider.jsx";
+import { checkRole } from "../helpers.js";
 
 export default function Weather() {
   const [cities, setCities] = useState([]);
@@ -56,7 +57,7 @@ export default function Weather() {
         </div>
       </div>
 
-      {user.isAdmin && <WeatherForm setCities={setCities} />}
+      {checkRole(user, "weather_edit") && <WeatherForm setCities={setCities} />}
 
       {isLoading && (
         <div className="container">

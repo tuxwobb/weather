@@ -45,7 +45,7 @@ export default function Profile() {
               Change password
             </Link>{" "}
             <Link
-              to={`/users/${user.id}/edit`}
+              to={`/profile/edit`}
               type="button"
               className="btn btn-sm btn-secondary"
             >

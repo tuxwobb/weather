@@ -1,22 +1,19 @@
-import UserForm from "./components/UserForm";
 import { useLoaderData, redirect } from "react-router-dom";
-import { editUser } from "../http";
+import UserForm from "./components/UserForm";
 import Error from "../error/Error.jsx";
+import { editUser } from "../http";
 import { useAuth } from "../AuthProvider.jsx";
+import { checkRole } from "../helpers.js";
 
 export default function UserEdit() {
   const usr = useLoaderData();
   const { user } = useAuth();
 
-  if (user.isAdmin) {
-    return <UserForm user={usr} />;
+  if (!checkRole(user, "admin")) {
+    return <Error message="You do not have permissions to see the content." />;
   }
 
-  if (user.id === usr.id) {
-    return <UserForm user={usr} />;
-  }
-
-  return <Error message="You are not an admin" />;
+  return <UserForm user={usr} />;
 }
 
 export async function action({ request }) {
