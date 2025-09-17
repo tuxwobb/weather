@@ -19,6 +19,15 @@ export default function User({ usr, handleDeleteUser, handleActivateUser }) {
         <td>{usr.email}</td>
         <td>{usr.active ? "Yes" : "No"}</td>
         <td>
+          <Link
+            to={`/users/${usr.id}/roles`}
+            type="button"
+            className="btn btn-sm btn-light"
+          >
+            {usr.roles.length}
+          </Link>
+        </td>
+        <td>
           <>
             <Link
               to={`/users/${usr.id}/edit`}
@@ -46,7 +55,7 @@ export default function User({ usr, handleDeleteUser, handleActivateUser }) {
               >
                 Activate
               </button>
-            )}{" "}
+            )}
           </>
         </td>
       </tr>

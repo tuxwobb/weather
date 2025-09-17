@@ -39,8 +39,15 @@ class PostCreate(PostBase):
 
 
 class RoleBase(BaseModel):
-    id: int
     name: str
+
+
+class Role(RoleBase):
+    id: int
+
+
+class RoleCreate(RoleBase):
+    pass
 
 
 class UserBase(BaseModel):
@@ -58,3 +65,8 @@ class User(UserBase):
 
 class UserCreate(UserBase):
     password: str
+
+
+class UserRole(BaseModel):
+    user_id: int
+    role_id: int

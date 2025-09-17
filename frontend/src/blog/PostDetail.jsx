@@ -31,19 +31,16 @@ export default function PostDetail() {
             {post.author} | {post.published.slice(0, 10)}
           </p>
           <p>
-            <Link className="btn btn-sm btn-light" to="/blog">
-              Back
-            </Link>{" "}
             {checkRole(user, "blog_edit") && (
               <>
                 <Link
-                  className="btn btn-sm btn-secondary"
+                  className="btn btn-sm btn-secondary me-2"
                   to={`/blog/${post.id}/edit`}
                 >
                   Edit
-                </Link>{" "}
+                </Link>
                 <button
-                  className="btn btn-sm btn-danger"
+                  className="btn btn-sm btn-danger me-2"
                   onClick={() => {
                     handleDeletePost(post.id);
                   }}
@@ -52,6 +49,12 @@ export default function PostDetail() {
                 </button>
               </>
             )}
+            <button
+              className="btn btn-sm btn-light me-2"
+              onClick={() => window.history.back()}
+            >
+              Back
+            </button>
           </p>
         </div>
       </div>

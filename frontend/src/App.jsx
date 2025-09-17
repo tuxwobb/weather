@@ -13,6 +13,7 @@ import Gallery from "./gallery/Gallery.jsx";
 import Users from "./users/Users.jsx";
 import UserNew, { action as newUserAction } from "./users/UserNew.jsx";
 import UserEdit, { action as editUserAction } from "./users/UserEdit.jsx";
+import UserRoles from "./users/UserRoles.jsx";
 import Profile from "./profile/Profile.jsx";
 import ChangePassword, {
   action as changePasswordAction,
@@ -111,6 +112,12 @@ const router = createBrowserRouter([
             action: editUserAction,
             loader: ({ params }) => userLoader(params.userId),
             errorElement: <Error message="Error during pushing data" />,
+          },
+          {
+            path: "/users/:userId/roles",
+            element: <UserRoles />,
+            loader: ({ params }) => userLoader(params.userId),
+            errorElement: <Error message="Error during fetching data" />,
           },
           {
             path: "/users/new",

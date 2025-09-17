@@ -1,4 +1,4 @@
-import { Form, useActionData } from "react-router-dom";
+import { Form, useActionData, Link } from "react-router-dom";
 
 export default function UserForm({ user }) {
   const data = useActionData();
@@ -64,8 +64,18 @@ export default function UserForm({ user }) {
             {user && (
               <input type="text" name="id" defaultValue={user.id} hidden />
             )}
-            <button type="submit" className="btn btn-sm btn-secondary">
+            <button type="submit" className="btn btn-sm btn-secondary me-2">
               Save
+            </button>
+            {/* <Link to={`/users/`} className="btn btn-sm btn-light me-2">
+              Back
+            </Link> */}
+            <button
+              type="button"
+              className="btn btn-sm btn-light me-2"
+              onClick={() => window.history.back()}
+            >
+              Back
             </button>
           </Form>
         </div>

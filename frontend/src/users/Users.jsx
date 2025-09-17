@@ -65,6 +65,7 @@ export default function Users() {
                       <th scope="col">Username</th>
                       <th scope="col">Email</th>
                       <th scope="col">Active</th>
+                      <th scope="col">Roles</th>
                       <th scope="col">Actions</th>
                     </tr>
                   </thead>

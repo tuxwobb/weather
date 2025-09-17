@@ -158,8 +158,15 @@ export default function PostForm({ post }) {
                 hidden
               />
             </div>
-            <button type="submit" className="btn btn-sm btn-secondary">
+            <button type="submit" className="btn btn-sm btn-secondary me-2">
               Save
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-light me-2"
+              onClick={() => window.history.back()}
+            >
+              Back
             </button>
           </Form>
         </div>

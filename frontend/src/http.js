@@ -362,3 +362,42 @@ export async function editProfile(user) {
 
   return resData;
 }
+
+export async function getRoles() {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`${CUSTOM_API_URL}/roles/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}
+
+export async function editUserRoles(user_id, roles) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`${CUSTOM_API_URL}/user_roles/${user_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: JSON.stringify(roles),
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(resData.message || "error occured");
+  }
+
+  return resData;
+}

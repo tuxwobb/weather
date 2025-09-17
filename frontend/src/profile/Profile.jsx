@@ -27,10 +27,6 @@ export default function Profile() {
                   <td>Active</td>
                   <td>{user.active ? "Yes" : "No"}</td>
                 </tr>
-                <tr>
-                  <td>Admin</td>
-                  <td>{user.admin ? "Yes" : "No"}</td>
-                </tr>
               </tbody>
             </table>
           </div>

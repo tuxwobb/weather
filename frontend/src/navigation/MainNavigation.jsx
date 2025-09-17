@@ -18,7 +18,7 @@ export default function MainNavigation() {
     >
       <div className="container">
         <NavLink to="/" className="navbar-brand" end>
-          Bobkovo.fun
+          Bobkovo-fun.cz
         </NavLink>
         <button
           className="navbar-toggler"
