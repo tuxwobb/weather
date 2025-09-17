@@ -37,8 +37,15 @@ export default function ChangePassword() {
                 className="form-control form-control-sm"
               />
             </div>
-            <button type="submit" className="btn btn-sm btn-secondary">
+            <button type="submit" className="btn btn-sm btn-secondary me-2">
               Change password
+            </button>
+            <button
+              type="button"
+              className="btn btn-sm btn-light me-2"
+              onClick={() => window.history.back()}
+            >
+              Back
             </button>
           </Form>
         </div>
