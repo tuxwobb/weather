@@ -46,12 +46,7 @@ export default function MainNavigation() {
             </NavLink>
 
             {checkRole(user, "files") && (
-              <NavLink
-                to="/files"
-                className="nav-link disabled"
-                aria-current="page"
-                end
-              >
+              <NavLink to="/files" className="nav-link" aria-current="page" end>
                 Files
               </NavLink>
             )}

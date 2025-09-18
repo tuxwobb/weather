@@ -10,8 +10,8 @@ import { checkRole } from "../helpers";
 export default function Users() {
   const { user } = useAuth();
   const users = useLoaderData();
-  const revalidator = useRevalidator();
   const [filteredUsers, setFilteredUsers] = useState(users);
+  const revalidator = useRevalidator();
 
   // check admin role
   if (!checkRole(user, "admin")) {

@@ -1,6 +1,8 @@
 import { Form } from "react-router-dom";
 import { useRef } from "react";
 import { toIsoString } from "../../helpers";
+import BackButton from "../../components/BackButton";
+import { useAuth } from "../../AuthProvider";
 
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import {
@@ -22,6 +24,7 @@ import {
 import "ckeditor5/ckeditor5.css";
 
 export default function PostForm({ post }) {
+  const { user } = useAuth();
   const bodyRef = useRef(null);
   const dt = new Date();
 
@@ -123,7 +126,7 @@ export default function PostForm({ post }) {
                 className="form-control form-control-sm"
                 id="author"
                 name="author"
-                defaultValue={post && post.author}
+                defaultValue={post ? post.author : user.fullname}
               />
             </div>
             <div className="mb-1">
@@ -161,13 +164,7 @@ export default function PostForm({ post }) {
             <button type="submit" className="btn btn-sm btn-secondary me-2">
               Save
             </button>
-            <button
-              type="button"
-              className="btn btn-sm btn-light me-2"
-              onClick={() => window.history.back()}
-            >
-              Back
-            </button>
+            <BackButton />
           </Form>
         </div>
       </div>

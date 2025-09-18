@@ -3,6 +3,7 @@ import { deletePost } from "../http";
 import parse from "html-react-parser";
 import { useAuth } from "../AuthProvider";
 import { checkRole } from "../helpers";
+import BackButton from "../components/BackButton";
 
 export default function PostDetail() {
   const navigate = useNavigate();
@@ -49,12 +50,7 @@ export default function PostDetail() {
                 </button>
               </>
             )}
-            <button
-              className="btn btn-sm btn-light me-2"
-              onClick={() => window.history.back()}
-            >
-              Back
-            </button>
+            <BackButton />
           </p>
         </div>
       </div>

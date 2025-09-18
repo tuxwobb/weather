@@ -1,4 +1,5 @@
 import { Form, useActionData, Link } from "react-router-dom";
+import BackButton from "../../components/BackButton";
 
 export default function UserForm({ user }) {
   const data = useActionData();
@@ -67,16 +68,7 @@ export default function UserForm({ user }) {
             <button type="submit" className="btn btn-sm btn-secondary me-2">
               Save
             </button>
-            {/* <Link to={`/users/`} className="btn btn-sm btn-light me-2">
-              Back
-            </Link> */}
-            <button
-              type="button"
-              className="btn btn-sm btn-light me-2"
-              onClick={() => window.history.back()}
-            >
-              Back
-            </button>
+            <BackButton />
           </Form>
         </div>
       </div>

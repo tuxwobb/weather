@@ -4,6 +4,7 @@ import { useAuth } from "../AuthProvider";
 import { checkRole } from "../helpers";
 import Error from "../error/Error";
 import { getRoles, editUserRoles, getMe } from "../http";
+import BackButton from "../components/BackButton";
 
 export default function UserRoles() {
   const [roles, setRoles] = useState(null);
@@ -74,12 +75,7 @@ export default function UserRoles() {
                 <button type="submit" className="btn btn-sm btn-secondary me-2">
                   Save
                 </button>
-                <button
-                  className="btn btn-sm btn-light me-2"
-                  onClick={() => window.history.back()}
-                >
-                  Back
-                </button>
+                <BackButton />
               </p>
             </form>
           )}

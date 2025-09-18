@@ -1,4 +1,13 @@
+import { useLoaderData } from "react-router-dom";
+import UploadFileForm from "./components/UploadFileForm";
+import File from "./File";
+import { useAuth } from "../AuthProvider";
+import { checkRole } from "../helpers";
+
 export default function Files() {
+  const files = useLoaderData();
+  const { user } = useAuth();
+
   return (
     <div className="container mt-3">
       <div className="row">
@@ -7,60 +16,25 @@ export default function Files() {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-6">
-          <div className="mb-3">
-            <input
-              className="form-control form-control-sm mb-1"
-              type="file"
-              id="formFile"
-              multiple
-            />
-            <button type="button" className="btn btn-sm btn-secondary">
-              Upload
-            </button>
-          </div>
-        </div>
-      </div>
+      {checkRole(user, "files_edit") && <UploadFileForm />}
 
       <div className="row">
         <div className="col">
           <table className="table">
             <thead>
               <tr>
-                <th>Název</th>
-                <th>Velikost</th>
-                <th>Uživatel</th>
-                <th>Akce</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Created Date</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>test.txt</td>
-                <td>0.1 MB</td>
-                <td>Tomáš Miklík</td>
-                <td>
-                  <button type="button" className="btn btn-sm btn-light">
-                    Stáhnout
-                  </button>
-                  <button type="button" className="btn btn-sm btn-danger">
-                    Smazat
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>dovolená.xlsx</td>
-                <td>1.5 MB</td>
-                <td>Tomáš Miklík</td>
-                <td>
-                  <button type="button" className="btn btn-sm btn-light">
-                    Stáhnout
-                  </button>
-                  <button type="button" className="btn btn-sm btn-danger">
-                    Smazat
-                  </button>
-                </td>
-              </tr>
+              {files.map((file) => (
+                <tr key={file.name}>
+                  <File file={file} />
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

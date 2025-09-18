@@ -1,5 +1,6 @@
 import { Form, redirect, useActionData } from "react-router-dom";
 import { changePassword } from "../http";
+import BackButton from "../components/BackButton";
 
 export default function ChangePassword() {
   const data = useActionData();
@@ -40,13 +41,7 @@ export default function ChangePassword() {
             <button type="submit" className="btn btn-sm btn-secondary me-2">
               Change password
             </button>
-            <button
-              type="button"
-              className="btn btn-sm btn-light me-2"
-              onClick={() => window.history.back()}
-            >
-              Back
-            </button>
+            <BackButton />
           </Form>
         </div>
       </div>

@@ -29,6 +29,7 @@ import {
   getUsers as usersLoader,
   getUser as userLoader,
   getMe as meLoader,
+  getFiles as filesLoader,
 } from "./http.js";
 import { AuthProvider } from "./AuthProvider.jsx";
 
@@ -88,6 +89,8 @@ const router = createBrowserRouter([
       {
         path: "/files",
         element: <Files />,
+        loader: filesLoader,
+        errorElement: <Error message="Error during fetching data" />,
       },
 
       // Gallery

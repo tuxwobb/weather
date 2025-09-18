@@ -401,3 +401,40 @@ export async function editUserRoles(user_id, roles) {
 
   return resData;
 }
+
+export async function uploadFile(formData) {
+  const response = await fetch("http://localhost:8000/files/file", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: formData,
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return resData;
+}
+
+export async function getFiles() {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch("http://localhost:8000/files/files", {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return resData;
+}

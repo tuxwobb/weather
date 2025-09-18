@@ -4,3 +4,4 @@ pytest
 SQLAlchemy
 pyjwt
 passlib[bcrypt]
+python-multipart
