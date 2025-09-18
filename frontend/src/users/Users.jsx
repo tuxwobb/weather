@@ -57,7 +57,7 @@ export default function Users() {
 
             <div className="row mb-2">
               <div className="col">
-                <table className="table">
+                <table className="table table-sm">
                   <thead>
                     <tr>
                       <th scope="col">Id</th>

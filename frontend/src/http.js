@@ -423,7 +423,7 @@ export async function uploadFile(formData) {
 export async function getFiles() {
   if (!getAuthToken()) return redirect("/login");
 
-  const response = await fetch("http://localhost:8000/files/files", {
+  const response = await fetch("http://localhost:8000/files/", {
     method: "GET",
     headers: {
       accept: "application/json",

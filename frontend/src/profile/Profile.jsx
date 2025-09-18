@@ -9,7 +9,7 @@ export default function Profile() {
         <div className="row">
           <div className="col">
             <h3>User profile</h3>
-            <table className="table">
+            <table className="table table-sm">
               <tbody>
                 <tr>
                   <td>Fullname</td>

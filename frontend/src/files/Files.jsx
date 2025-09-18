@@ -20,23 +20,26 @@ export default function Files() {
 
       <div className="row">
         <div className="col">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Created Date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {files.map((file) => (
-                <tr key={file.name}>
-                  <File file={file} />
+          {files.length === 0 && <p>No files found.</p>}
+          {files.length > 0 && (
+            <table className="table table-sm">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Created Date</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {files.map((file) => (
+                  <tr key={file.name}>
+                    <File file={file} />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

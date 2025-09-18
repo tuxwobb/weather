@@ -8,7 +8,7 @@ from dependencies import get_current_active_user
 router = APIRouter()
 
 
-@router.get("/files")
+@router.get("/")
 async def get_files():
     files = os.listdir("./files")
     return [
