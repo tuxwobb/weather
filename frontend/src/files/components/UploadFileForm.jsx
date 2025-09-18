@@ -1,24 +1,23 @@
 import { useRef } from "react";
-import { uploadFile } from "../../http";
-import { useNavigate } from "react-router-dom";
+import { useRevalidator } from "react-router-dom";
+import { uploadFile, uploadFiles } from "../../http";
 
 export default function UploadFileForm() {
   const fileRef = useRef();
-  const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
-  function handleUpload() {
-    async function upload(fd) {
-      return await uploadFile(fd);
+  async function handleUpload(files) {
+    if (files.length === 0) {
+      window.alert("Please select at least one file.");
     }
-
-    const files = fileRef.current.files;
     const formData = new FormData();
     [...files].forEach((file) => {
       formData.append("file", file);
-      upload(formData);
     });
+    await uploadFile(formData);
 
-    navigate(".", { replace: true });
+    fileRef.current.value = null;
+    revalidator.revalidate();
   }
 
   return (
@@ -37,7 +36,7 @@ export default function UploadFileForm() {
             <button
               type="button"
               className="btn btn-sm btn-secondary"
-              onClick={handleUpload}
+              onClick={() => handleUpload(fileRef.current.files)}
             >
               Upload
             </button>

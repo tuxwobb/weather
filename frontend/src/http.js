@@ -420,6 +420,24 @@ export async function uploadFile(formData) {
   return resData;
 }
 
+export async function uploadFiles(formData) {
+  const response = await fetch("http://localhost:8000/files/files", {
+    method: "POST",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+    body: formData,
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return resData;
+}
+
 export async function getFiles() {
   if (!getAuthToken()) return redirect("/login");
 
