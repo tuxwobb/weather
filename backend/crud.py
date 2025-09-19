@@ -167,7 +167,13 @@ def make_admin_user(user_id: int, session: Session = None):
 
 # Roles
 def get_roles(skip: int = 0, limit: int = 100, session: Session = None):
-    roles = session.query(models.Role).offset(skip).limit(limit).all()
+    roles = (
+        session.query(models.Role)
+        .order_by(models.Role.name)
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
     return roles
 
 

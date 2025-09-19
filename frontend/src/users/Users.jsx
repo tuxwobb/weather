@@ -21,6 +21,7 @@ export default function Users() {
   async function handleDeleteUser(id) {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     await deleteUser(id);
+
     const newUsers = users.filter((user) => user.id !== id);
     setFilteredUsers(newUsers);
   }
@@ -28,9 +29,9 @@ export default function Users() {
   async function handleActivateUser(id) {
     if (!window.confirm("Are you sure you want to activate this user?")) return;
     await activateUser(id);
+
     await revalidator.revalidate();
-    const newUsers = users;
-    setFilteredUsers(newUsers);
+    setFilteredUsers(users);
   }
 
   return (
