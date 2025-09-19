@@ -1,15 +1,17 @@
 import os
 from datetime import datetime
 
-from pathlib import Path
-from fastapi import APIRouter, UploadFile, File, Depends
-from dependencies import get_current_active_user
+from fastapi import APIRouter, UploadFile, Depends
+from fastapi.responses import FileResponse
+
+from dependencies import get_current_active_user, get_current_admin_user
 
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", dependencies=[Depends(get_current_active_user)])
 async def get_files():
+    """Get files"""
     files = os.listdir("./files")
     return [
         {
@@ -23,20 +25,51 @@ async def get_files():
     ]
 
 
-@router.post("/file", dependencies=[Depends(get_current_active_user)])
+@router.post("/file", dependencies=[Depends(get_current_admin_user)])
 async def create_upload_file(file: UploadFile):
+    """Save file"""
     save_upload_file(file, "./files")
     return {"filename": file.filename, "size": file.size}
 
 
-@router.post("/files", dependencies=[Depends(get_current_active_user)])
+@router.post("/files", dependencies=[Depends(get_current_admin_user)])
 async def create_upload_files(files: list[UploadFile]):
+    """Save multiple files"""
     for file in files:
         save_upload_file(file, "./files")
     return {
         "filenames": [file.filename for file in files],
         "sizes": [file.size for file in files],
     }
+
+
+@router.delete(
+    "/{file_name}",
+    dependencies=[Depends(get_current_admin_user)],
+)
+async def delete_file(
+    file_name: str,
+):
+    """Delete file"""
+    try:
+        os.remove(f"./files/{file_name}")
+        return {"message": "File deleted"}
+    except FileNotFoundError:
+        return {"message": "File not found"}
+
+
+@router.get(
+    "/{file_name}",
+    dependencies=[Depends(get_current_admin_user)],
+)
+async def download(
+    file_name: str,
+):
+    response = FileResponse(
+        "./files/" + file_name,
+        filename=file_name,
+    )
+    return response
 
 
 def save_upload_file(file: UploadFile, path: str) -> None:

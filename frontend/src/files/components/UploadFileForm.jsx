@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useRevalidator } from "react-router-dom";
-import { uploadFile, uploadFiles } from "../../http";
+import { uploadFiles } from "../../http";
 
 export default function UploadFileForm() {
   const fileRef = useRef();
@@ -10,11 +10,12 @@ export default function UploadFileForm() {
     if (files.length === 0) {
       window.alert("Please select at least one file.");
     }
+
     const formData = new FormData();
-    [...files].forEach((file) => {
-      formData.append("file", file);
-    });
-    await uploadFile(formData);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+    await uploadFiles(formData);
 
     fileRef.current.value = null;
     revalidator.revalidate();

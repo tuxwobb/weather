@@ -1,15 +1,20 @@
+import { useRevalidator } from "react-router-dom";
 import { useAuth } from "../AuthProvider";
 import { checkRole } from "../helpers";
+import { deleteFile, downloadFile } from "../http";
 
 export default function File({ file }) {
   const { user } = useAuth();
+  const revalidator = useRevalidator();
 
-  function handleDownload() {
-    console.log("handleDownload");
+  async function handleDownload(fileName) {
+    await downloadFile(fileName);
   }
 
-  function handleDelete() {
-    console.log("handleDelete");
+  async function handleDelete() {
+    if (!window.confirm("Are you sure you want to delete this file?")) return;
+    await deleteFile(file.name);
+    revalidator.revalidate();
   }
 
   return (
@@ -23,7 +28,7 @@ export default function File({ file }) {
         <button
           type="button"
           className="btn btn-sm btn-light me-2"
-          onClick={handleDownload}
+          onClick={() => handleDownload(file.name)}
         >
           Download
         </button>

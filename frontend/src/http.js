@@ -456,3 +456,50 @@ export async function getFiles() {
 
   return resData;
 }
+
+export async function deleteFile(fileName) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`http://localhost:8000/files/${fileName}`, {
+    method: "DELETE",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resData = await response.json();
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  return resData;
+}
+
+export async function downloadFile(fileName) {
+  if (!getAuthToken()) return redirect("/login");
+
+  const response = await fetch(`http://localhost:8000/files/${fileName}`, {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${getAuthToken()}`,
+    },
+  });
+  const resBlob = await response.blob();
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const url = window.URL.createObjectURL(new Blob([resBlob]));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName || "downloaded-file";
+  document.body.appendChild(link);
+
+  link.click();
+
+  document.body.removeChild(link);
+  window.URL.revokeObjectURL(url);
+}
